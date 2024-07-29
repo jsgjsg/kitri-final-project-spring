@@ -5,16 +5,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Feed {
     private long id;
-    private String nickname;
-    private String user_id;
-    private String password;
-    private String location;
-    private String introduction;
+    private long user_id;
     private String image;
-    }
+    private String content;
+    private String animal;
+    private LocalDateTime createdAt;
+}
