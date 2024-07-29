@@ -37,14 +37,15 @@ public class SecurityConfig {
     }
 
     @Bean
-
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/**").permitAll()  // 인증이 필요 없는 엔드포인트
                                 .anyRequest().authenticated()
                 )
+                .cors(withDefaults())
                 .formLogin(withDefaults()); // 스프링 시큐리티 기본 로그인 페이지 사용
         return http.build();
     }
