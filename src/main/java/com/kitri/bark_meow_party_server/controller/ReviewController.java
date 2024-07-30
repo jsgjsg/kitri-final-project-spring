@@ -35,13 +35,21 @@ public class ReviewController {
     public void deleteReview(@PathVariable long reviewId) {
         reviewService.delete(reviewId);
     }
-    @GetMapping("/reviews?category={category}")
-    public String getReviews(@PathVariable String category) {
-        return "reviews";
+//    @GetMapping("/reviews?category={category}")
+//    public String getReviews(@PathVariable String category) {
+//        return "reviews";
+//    }
+    @GetMapping("/reviews/category")
+    public List<Review> getReviewsByCategory(@RequestParam String category) {
+        return reviewService.findByCategory(category);
     }
-    @GetMapping("/reviews/search?query={query}")
-    public String getSearchReviews(@PathVariable String query, Model model) {
-        model.addAttribute("query", query);
-        return "search";
+//    @GetMapping("/reviews/search?query={query}")
+//    public String getSearchReviews(@PathVariable String query, Model model) {
+//        model.addAttribute("query", query);
+//        return "search";
+//    }
+    @GetMapping("/reviews/search")
+    public List<Review> getReviewsBySearch(@RequestParam String query) {
+        return reviewService.findByQuery(query);
     }
 }
