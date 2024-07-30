@@ -11,7 +11,7 @@ public interface FeedMapper {
     List<Feed> findAll();
 
     // 피드 한 개씩 보기
-    @Select("SELECT * From  Feed where user_id = #{id}")
+    @Select("SELECT * From  Feed where user_id = #{user_id}")
     Feed findById(long user_id);
 
     // 피드 삽입
@@ -24,7 +24,7 @@ public interface FeedMapper {
     void update(Feed Feed);
 
     // 피드 삭제
-    @Delete("DELETE from feed where user_id = #{user_id}")
-    void delete(long id);
+    @Delete("DELETE from feed where id = #{feedId}")
+    void delete(long feedId);
 }
 
