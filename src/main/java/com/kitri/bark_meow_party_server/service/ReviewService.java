@@ -26,4 +26,10 @@ public class ReviewService {
     public void delete(Long id) {
         reviewMapper.delete(id);
     }
+    public List<Review> findByCategory(String category) {
+        return reviewMapper.selectByCategory(category);
+    }
+    public List<Review> findByQuery(String query) {
+        return reviewMapper.searchByQuery(query);
+    }
 }
