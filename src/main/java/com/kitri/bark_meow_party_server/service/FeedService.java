@@ -15,4 +15,17 @@ public class FeedService {
     public List<Feed> getFeeds() {
         return feedMapper.findAll();
     }
+    public Feed getFeedById(long id) {
+        return feedMapper.findById(id);
+    }
+    public Feed saveFeed(Feed feed) {
+        feedMapper.insert(feed);
+        return feed;
+    }
+    public void updateFeed(Feed feed) {
+        feedMapper.update(feed);
+    }
+    public void deleteFeedById(long feedId) {
+       feedMapper.delete(feedId);
+    }
 }
