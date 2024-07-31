@@ -21,10 +21,10 @@ public interface ReviewMapper {
             "repurchase LIKE CONCAT('%', #{query}, '%') OR " +
             "animal LIKE CONCAT('%', #{query}, '%')")
     List<Review> searchByQuery(String query);
-    @Insert("INSERT INTO Review(item, good, bad, tip, image, repurchase, satisfaction) VALUES (#{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction})")
+    @Insert("INSERT INTO Review(user_id, item, good, bad, tip, image, repurchase, satisfaction) VALUES (#{user_id}, #{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Review review);
-    @Update("UPDATE Review SET item=#{item}, good=#{good}, bad=#{bad}, tip=#{tip}, image=#{image}, repurchase=#{repurchase}, satisfaction=#{satisfaction} WHERE id=#{id}")
+    @Update("UPDATE Review SET user_id=#{user_id}, item=#{item}, good=#{good}, bad=#{bad}, tip=#{tip}, image=#{image}, repurchase=#{repurchase}, satisfaction=#{satisfaction} WHERE id=#{id}")
     void update(Review review);
     @Delete("DELETE FROM Review WHERE id=#{id}")
     void delete(Long id);
