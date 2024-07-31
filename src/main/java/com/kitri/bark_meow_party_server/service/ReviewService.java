@@ -1,8 +1,11 @@
 package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.Review;
+import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +14,9 @@ import java.util.List;
 public class ReviewService {
     @Autowired
     ReviewMapper reviewMapper;
+    @Autowired
+    UserService userService;
+
     public List<Review> findAll() {
         return reviewMapper.selectAll();
     }
@@ -18,6 +24,12 @@ public class ReviewService {
         return reviewMapper.selectById(id);
     }
     public void create(Review review) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+
+        User user = userService.findByUsername(username);
+        review.setId(user.getId());
+
         reviewMapper.insert(review);
     }
     public void update(Review review) {

@@ -18,5 +18,6 @@ public class Review {
     private Double satisfaction;
     private String animal;
     private String category;
+    private Long userId;
     private LocalDateTime createdAt;
 }

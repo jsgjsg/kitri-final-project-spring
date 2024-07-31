@@ -3,8 +3,9 @@ package com.kitri.bark_meow_party_server.controller;
 import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ReviewController {
         reviewService.create(review);
         return review;
     }
+
     @GetMapping("/reviews")
     public List<Review> getReviews() {
         reviewService.findAll();
@@ -51,5 +53,12 @@ public class ReviewController {
     @GetMapping("/reviews/search")
     public List<Review> getReviewsBySearch(@RequestParam String query) {
         return reviewService.findByQuery(query);
+    }
+    private Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        }
+        return null; // 현재 사용자가 인증되지 않은 경우, null을 반환합니다.
     }
 }
