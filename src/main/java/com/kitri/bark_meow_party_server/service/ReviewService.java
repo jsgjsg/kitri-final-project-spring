@@ -4,6 +4,7 @@ import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,11 @@ public class ReviewService {
         return reviewMapper.selectById(id);
     }
     public void create(Review review) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
         User user = userService.findByUsername(username);
-        review.setId(user.getId());
+        review.setUserId(user.getId());
 
         reviewMapper.insert(review);
     }

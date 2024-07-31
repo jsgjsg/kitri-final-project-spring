@@ -11,9 +11,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -31,24 +36,40 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin123")
-                .roles("ADMIN")
-                .build();
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user123")
-                .roles("USER")
-                .build();
-        UserDetails test = User.withDefaultPasswordEncoder()
-                .username("test")
-                .password("test")
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(admin, user, test);
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+        userDetailsManager.setUsersByUsernameQuery("select username, password, enabled from user where username=?");
+        userDetailsManager.setAuthoritiesByUsernameQuery(
+                "SELECT u.username, a.authority FROM authorities a " +
+                        "JOIN user u ON a.user_id = u.id WHERE u.username = ?");
+
+        return userDetailsManager;
+    }
+
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails admin = User.withDefaultPasswordEncoder()
+//                .username("admin")
+//                .password("admin123")
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username("user")
+//                .password("user123")
+//                .roles("USER")
+//                .build();
+//        UserDetails test = User.withDefaultPasswordEncoder()
+//                .username("test")
+//                .password("test")
+//                .roles("ADMIN")
+//                .build();
+//        return new InMemoryUserDetailsManager(admin, user, test);
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -63,6 +84,7 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/auth/login").permitAll()
+                                .requestMatchers("/api/auth/signup").permitAll()
 //                                .requestMatchers("/**").permitAll()  // 인증이 필요 없는 엔드포인트
                                 .anyRequest().authenticated()
                 )

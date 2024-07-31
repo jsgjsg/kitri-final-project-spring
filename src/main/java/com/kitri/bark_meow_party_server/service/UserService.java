@@ -8,16 +8,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserMapper userMapper;
 
-    public void save(User user) {
-//        // 비밀번호 암호화
-//        String encodedPassword = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
+    public void signup(User user) {
+        // 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        user.setEnabled(true);
 
         // 사용자 저장
-        userMapper.insertUser(user);
+        userMapper.insert(user);
 
         // 권한 저장
         userMapper.insertAuthority(user.getId(), "ROLE_USER");
