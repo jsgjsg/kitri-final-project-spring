@@ -11,5 +11,6 @@ public class ReviewComment {
     private Long id;
     private Long reviewId;
     private String content;
+    private Long userId;
     private LocalDateTime createdAt;
 }
