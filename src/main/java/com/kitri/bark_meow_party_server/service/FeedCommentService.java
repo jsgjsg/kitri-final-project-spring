@@ -18,14 +18,14 @@ public class FeedCommentService {
     public FeedComment getFeedComment(Long id) {
         return feedCommentMapper.selectById(id);
     }
-    public void addReviewComment(FeedComment feedComment) {
+    public void addFeedComment(FeedComment feedComment) {
         feedComment.setCreatedAt(LocalDateTime.now());
         feedCommentMapper.feedCommentInsert(feedComment);
     }
-    public void updateReviewComment(FeedComment feedComment) {
+    public void updateFeedComment(FeedComment feedComment) {
         feedCommentMapper.feedCommentUpdate(feedComment);
     }
-    public void deleteReviewComment(Long id) {
+    public void deleteFeedComment(Long id) {
         feedCommentMapper.deleteFeedComment(id);
     }
 }
