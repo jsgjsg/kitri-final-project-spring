@@ -54,5 +54,4 @@ public class ReviewController {
     public List<Review> getReviewsBySearch(@RequestParam String query) {
         return reviewService.findByQuery(query);
     }
-
 }

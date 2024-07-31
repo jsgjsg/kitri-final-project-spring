@@ -13,7 +13,7 @@ public interface UserMapper {
 
     @Insert("INSERT INTO user (nickname, username, password, location, introduce, image) VALUES (#{nickname}, #{username}, #{password}, #{location}, #{introduce}, #{image})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    void insertUser(User user);
+    void insert(User user);
 
     @Insert("INSERT INTO authorities (user_id, authority) VALUES (#{userId}, #{authority})")
     void insertAuthority(Long userId, String authority);
