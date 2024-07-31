@@ -34,6 +34,12 @@ public class ReviewService {
         reviewMapper.insert(review);
     }
     public void update(Review review) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userService.findByUsername(username);
+        review.setUserId(user.getId());
+
         reviewMapper.update(review);
     }
     public void delete(Long id) {

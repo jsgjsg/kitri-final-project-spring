@@ -36,6 +36,12 @@ public class ReviewCommentService {
         reviewCommentMapper.reviewCommentInsert(reviewComment);
     }
     public void updateReviewComment(ReviewComment reviewComment) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+
+        User user = userService.findByUsername(username);
+        reviewComment.setId(user.getId());
+        
         reviewCommentMapper.reviewCommentUpdate(reviewComment);
     }
     public void deleteReviewComment(Long id) {
