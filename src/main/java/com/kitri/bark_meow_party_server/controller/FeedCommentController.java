@@ -13,9 +13,9 @@ public class FeedCommentController {
     @Autowired
     private FeedCommentService feedCommentService;
     @PostMapping("/feeds/{feedId}/comments")
-    public FeedComment addFeedComment(@RequestBody FeedComment reviewComment) {
-        feedCommentService.addReviewComment(reviewComment);
-        return reviewComment;
+    public FeedComment addFeedComment(@RequestBody FeedComment feedComment) {
+        feedCommentService.addFeedComment(feedComment);
+        return feedComment;
     }
     @GetMapping("/feeds/{feedId}/comments")
     public List<FeedComment> getFeedComments(@PathVariable int feedId) {
@@ -25,11 +25,11 @@ public class FeedCommentController {
     public FeedComment updateFeedComment(@RequestBody FeedComment feedComment,
                                              @PathVariable long feedId, @PathVariable long commentId) {
         feedComment.setFeedId(feedId);
-        feedCommentService.updateReviewComment(feedComment);
+        feedCommentService.updateFeedComment(feedComment);
         return feedComment;
     }
     @DeleteMapping("/feeds/{feedId}/comments/{commentId}")
     public void deleteFeedComment(@PathVariable long feedId, @PathVariable long commentId) {
-        feedCommentService.deleteReviewComment(commentId);
+        feedCommentService.deleteFeedComment(commentId);
     }
 }
