@@ -14,36 +14,48 @@ import java.util.List;
 
 @Service
 public class ReviewCommentService {
-    @Autowired
+    @Autowired //ReviewCommentMapper 자동 의존성 주입
     ReviewCommentMapper reviewCommentMapper;
-    @Autowired
+    @Autowired //UserService 자동 의존성 주입
     UserService userService;
 
+    //후기 댓글 조회
     public List<ReviewComment> getReviewComments() {
         return reviewCommentMapper.selectAll();
     }
+
     public ReviewComment getReviewComment(Long id) {
         return reviewCommentMapper.selectById(id);
     }
+    //후기에 대한 댓글 작성
     public void addReviewComment(ReviewComment reviewComment) {
+        //로그인 한 유저로 작성자를 고정 시키기 위한 로직
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
 
         User user = userService.findByUsername(username);
         reviewComment.setId(user.getId());
 
+        //작성 시간
         reviewComment.setCreatedAt(LocalDateTime.now());
+        //후기 댓글 추가
         reviewCommentMapper.reviewCommentInsert(reviewComment);
     }
+
+    //후기에 대한 댓글 수정
     public void updateReviewComment(ReviewComment reviewComment) {
+        //로그인 한 유저로 작성자를 고정 시키기 위한 로직
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
 
         User user = userService.findByUsername(username);
         reviewComment.setId(user.getId());
-        
+
+        //후기 댓글 수정
         reviewCommentMapper.reviewCommentUpdate(reviewComment);
     }
+
+    //후기에 대한 댓글 삭제
     public void deleteReviewComment(Long id) {
         reviewCommentMapper.deleteReviewComment(id);
     }

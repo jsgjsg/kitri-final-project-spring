@@ -7,30 +7,41 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController //RESTApi 웹 서비스를 만들 때 사용하는 컨트롤러
 @RequestMapping("/api")
 public class ReviewCommentController {
-    @Autowired
+    @Autowired //ReviewCommentService 자동 의존성 주입
     private ReviewCommentService reviewCommentService;
 
+    //후기에 대한 댓글을 작성 하기 위한 컨트롤러
     @PostMapping("/reviews/{reviewId}/comments")
     public ReviewComment addReviewComment(@RequestBody ReviewComment reviewComment) {
+        //reviewCommentService 작성 한 후기에 대한 댓글 작성 로직을 가져온다.
         reviewCommentService.addReviewComment(reviewComment);
         return reviewComment;
-}
+    }
+
+    //후기에 대한 댓글을 조회 하기 위한 컨트롤러
     @GetMapping("/reviews/{reviewId}/comments")
     public List<ReviewComment> getReviewComments() {
+        //reviewCommentService 작성 한 후기에 대한 댓글 조회 로직을 가져온다.
         return reviewCommentService.getReviewComments();
     }
+
+    //후기에 대한 댓글을 수정 하기 위한 컨트롤러
     @PutMapping("/reviews/{reviewId}/comments/{commentId}")
     public ReviewComment updateReviewComment(@RequestBody ReviewComment reviewComment,
                                              @PathVariable long reviewId, @PathVariable long commentId) {
         reviewComment.setReviewId(reviewId);
+        //reviewCommentService 작성 한 후기에 대한 댓글 수정 로직을 가져온다.
         reviewCommentService.updateReviewComment(reviewComment);
         return reviewComment;
     }
+
+    //후기에 대한 댓글을 삭제 하기 위한 컨트롤러
     @DeleteMapping("/reviews/{reviewId}/comments/{commentId}")
     public void deleteReviewComment(@PathVariable long reviewId, @PathVariable long commentId) {
+        //reviewCommentService 작성 한 후기에 대한 댓글 삭제 로직을 가져온다.
         reviewCommentService.deleteReviewComment(commentId);
     }
 

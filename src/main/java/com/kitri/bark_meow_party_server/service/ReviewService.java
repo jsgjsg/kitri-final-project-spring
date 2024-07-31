@@ -13,41 +13,57 @@ import java.util.List;
 
 @Service
 public class ReviewService {
-    @Autowired
+    @Autowired //ReviewMapper 자동 의존성 주입
     ReviewMapper reviewMapper;
-    @Autowired
+    @Autowired //UserService 자동 의존성 주입
     UserService userService;
 
+    //DB 후기 테이블 전체 조회
     public List<Review> findAll() {
         return reviewMapper.selectAll();
     }
+
     public Review findById(Long id) {
         return reviewMapper.selectById(id);
     }
+
+    //후기 작성
     public void create(Review review) {
+        //로그인 한 유저로 작성자를 고정 시키기 위한 로직
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         User user = userService.findByUsername(username);
         review.setUserId(user.getId());
 
+        //후기 작성
         reviewMapper.insert(review);
     }
+
+    //후기 수정
     public void update(Review review) {
+        //로그인 한 유저로 작성자를 고정 시키기 위한 로직
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         User user = userService.findByUsername(username);
         review.setUserId(user.getId());
 
+        //후기 수정
         reviewMapper.update(review);
     }
+
+    //후기 삭제
     public void delete(Long id) {
         reviewMapper.delete(id);
     }
+
+    //카테고리 분류
     public List<Review> findByCategory(String category) {
         return reviewMapper.selectByCategory(category);
     }
+
+    //검색
     public List<Review> findByQuery(String query) {
         return reviewMapper.searchByQuery(query);
     }

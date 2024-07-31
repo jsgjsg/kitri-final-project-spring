@@ -7,20 +7,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//FeedCommentController는 피드 댓글에 대한 HTTP 요청을 처리하는 REST 컨트롤러
 @RestController
 @RequestMapping("/api")
 public class FeedCommentController {
-    @Autowired
+    @Autowired //FeedCommentService 자동 의존성 주입
     private FeedCommentService feedCommentService;
+    //피드에 대한 댓글을 작성 하기 위한 컨트롤러
     @PostMapping("/feeds/{feedId}/comments")
     public FeedComment addFeedComment(@RequestBody FeedComment feedComment) {
         feedCommentService.addFeedComment(feedComment);
         return feedComment;
     }
+    //피드에 대한 댓글을 조회 하기 위한 컨트롤러
     @GetMapping("/feeds/{feedId}/comments")
     public List<FeedComment> getFeedComments(@PathVariable int feedId) {
         return feedCommentService.getFeedComments();
     }
+    //피드에 대한 댓글을 수정 하기 위한 컨트롤러
     @PutMapping("/feeds/{feedId}/comments/{commentId}")
     public FeedComment updateFeedComment(@RequestBody FeedComment feedComment,
                                              @PathVariable long feedId, @PathVariable long commentId) {
@@ -28,6 +32,7 @@ public class FeedCommentController {
         feedCommentService.updateFeedComment(feedComment);
         return feedComment;
     }
+    //피드에 대한 댓글을 삭제 하기 위한 컨트롤러
     @DeleteMapping("/feeds/{feedId}/comments/{commentId}")
     public void deleteFeedComment(@PathVariable long feedId, @PathVariable long commentId) {
         feedCommentService.deleteFeedComment(commentId);
