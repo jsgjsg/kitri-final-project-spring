@@ -7,10 +7,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ReviewComment {
+public class FeedComment {
     private Long id;
-    private Long reviewId;
+    private Long feedId;
     private String content;
-    private Long userId;
     private LocalDateTime createdAt;
 }

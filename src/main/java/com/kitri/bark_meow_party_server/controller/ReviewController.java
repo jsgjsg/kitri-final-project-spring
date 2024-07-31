@@ -54,11 +54,4 @@ public class ReviewController {
     public List<Review> getReviewsBySearch(@RequestParam String query) {
         return reviewService.findByQuery(query);
     }
-//    private Long getCurrentUserId() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-//            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//        }
-//        return null; // 현재 사용자가 인증되지 않은 경우, null을 반환합니다.
-//    }
 }
