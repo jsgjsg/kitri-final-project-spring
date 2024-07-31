@@ -29,7 +29,7 @@ public interface ReviewMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Review review);
 
-    @Update("UPDATE Review SET user_id=#{user_id}, item=#{item}, good=#{good}, bad=#{bad}, tip=#{tip}, image=#{image}, repurchase=#{repurchase}, satisfaction=#{satisfaction} WHERE id=#{id}")
+    @Update("UPDATE Review SET user_id=#{userId}, item=#{item}, good=#{good}, bad=#{bad}, tip=#{tip}, image=#{image}, repurchase=#{repurchase}, satisfaction=#{satisfaction}, animal=#{animal}, category=#{category} WHERE id=#{id}")
     void update(Review review);
 
     @Delete("DELETE FROM Review WHERE id=#{id}")
