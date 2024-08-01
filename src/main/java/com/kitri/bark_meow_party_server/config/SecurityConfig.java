@@ -85,6 +85,8 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/auth/login").permitAll()
                                 .requestMatchers("/api/auth/signup").permitAll()
+                                .requestMatchers("/api/auth/check-username").permitAll()
+                                .requestMatchers("/api/auth/check-nickname").permitAll()
 //                                .requestMatchers("/**").permitAll()  // 인증이 필요 없는 엔드포인트
                                 .anyRequest().authenticated()
                 )

@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     @Select("SELECT * FROM user WHERE username = #{username}")
@@ -17,4 +19,10 @@ public interface UserMapper {
 
     @Insert("INSERT INTO authorities (user_id, authority) VALUES (#{userId}, #{authority})")
     void insertAuthority(Long userId, String authority);
+
+    @Select("SELECT username FROM user")
+    List<String> findAllUsernames();
+
+    @Select("SELECT nickname FROM user")
+    List<String> findAllNicknames();
 }
