@@ -39,6 +39,19 @@ public class UserController {
         return user;
     }
 
+//    /check-username?username=${username}
+    @GetMapping("/check-username")
+    public ResponseEntity<Boolean> checkUsername(@RequestParam("username") String username) {
+        boolean isDuplicate = userService.checkUsername(username); // 중복 시 true
+        return ResponseEntity.ok(!isDuplicate); // 사용 가능하면 true
+    }
+
+    @GetMapping("/check-nickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestParam("nickname") String nickname) {
+        boolean isDuplicate = userService.checkNickname(nickname); // 중복 시 true
+        return ResponseEntity.ok(!isDuplicate); // 사용 가능하면 true
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequestDTO authRequest) throws Exception {
         try {

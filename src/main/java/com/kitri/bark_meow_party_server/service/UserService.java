@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -32,4 +34,17 @@ public class UserService {
     public User findByUsername(String username) {
         return userMapper.findByUsername(username);
     }
+
+    public boolean checkUsername(String username) {
+        List<String> allUsernames = userMapper.findAllUsernames();
+
+        return allUsernames.contains(username);
+    }
+
+    public boolean checkNickname(String nickname) {
+        List<String> allUsernames = userMapper.findAllNicknames();
+
+        return allUsernames.contains(nickname);
+    }
+
 }
