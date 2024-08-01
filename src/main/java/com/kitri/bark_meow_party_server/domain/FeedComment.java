@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class FeedComment {
     private Long id;
+    private Long userId;
     private Long feedId;
     private String content;
     private LocalDateTime createdAt;
