@@ -17,7 +17,7 @@ public class FeedController {
     private FeedService feedService;
 
     // 모든 피드 목록을 조회
-    @GetMapping("")
+    @GetMapping("/")
     public List<Feed> list() {
         return feedService.getFeeds();
     }
@@ -29,7 +29,7 @@ public class FeedController {
     }
 
     // 특정 ID의 피드를 저장
-    @PostMapping("")
+    @PostMapping("/")
     public Feed save(Feed feed) {
         return feedService.saveFeed(feed);
     }
