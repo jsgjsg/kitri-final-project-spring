@@ -31,7 +31,7 @@ public interface ReviewCommentMapper {
     void reviewCommentInsert(ReviewComment comment);
 
     //주어진 ID에 해당하는 후기에 대한 댓글 수정
-    @Update("UPDATE review_comment SET user_id=#{userId}, content=#{content} WHERE id=#{id}")
+    @Update("UPDATE review_comment SET content=#{content} WHERE id=#{id}")
     void reviewCommentUpdate(ReviewComment comment);
 
     //주어진 ID에 해당하는 후기에 대한 댓글 삭제
