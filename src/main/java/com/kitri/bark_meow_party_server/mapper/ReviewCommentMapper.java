@@ -2,6 +2,7 @@ package com.kitri.bark_meow_party_server.mapper;
 
 import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.domain.ReviewComment;
+import com.kitri.bark_meow_party_server.dto.ReviewCommentWithUserDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -14,8 +15,12 @@ public interface ReviewCommentMapper {
     List<ReviewComment> selectAll();
 
     //주어진 ID에 해당하는 후기에 대한 댓글 조회
-    @Select("SELECT * FROM review_comment WHERE review_id = #{reviewId}")
-    List<ReviewComment> selectByReviewId(Long reviewId);
+    @Select("SELECT * " +
+            "FROM review_comment r " +
+            "JOIN user u " +
+            "ON r.user_id = u.id " +
+            "WHERE review_id = #{reviewId}")
+    List<ReviewCommentWithUserDTO> selectByReviewId(Long reviewId);
 
     // 특정 댓글 ID로 조회
     @Select("SELECT * FROM review_comment WHERE id = #{id}")

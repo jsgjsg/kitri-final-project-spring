@@ -1,6 +1,7 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.ReviewComment;
+import com.kitri.bark_meow_party_server.dto.ReviewCommentWithUserDTO;
 import com.kitri.bark_meow_party_server.service.ReviewCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class ReviewCommentController {
 
     //후기에 대한 댓글을 조회 하기 위한 컨트롤러
     @GetMapping("/reviews/{reviewId}/comments")
-    public List<ReviewComment> getReviewComments(@PathVariable Long reviewId) {
+    public List<ReviewCommentWithUserDTO> getReviewComments(@PathVariable Long reviewId) {
         //reviewCommentService 작성 한 후기에 대한 댓글 조회 로직을 가져온다.
         return reviewCommentService.getReviewCommentsByReviewId(reviewId);
     }
