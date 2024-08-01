@@ -14,15 +14,19 @@ public interface ReviewCommentMapper {
     List<ReviewComment> selectAll();
 
     //주어진 ID에 해당하는 후기에 대한 댓글 조회
+    @Select("SELECT * FROM review_comment WHERE review_id = #{reviewId}")
+    List<ReviewComment> selectByReviewId(Long reviewId);
+
+    // 특정 댓글 ID로 조회
     @Select("SELECT * FROM review_comment WHERE id = #{id}")
     ReviewComment selectById(Long id);
 
     //후기에 대한 댓글 추가
-    @Insert("INSERT INTO ReviewComment(review_id, user_id, content, create_at) VALUES (#{review_id}, #{user_id}, #{content}, #{create_at}}, #{satisfaction})")
+    @Insert("INSERT INTO review_comment(review_id, user_id, content, created_at) VALUES (#{reviewId}, #{userId}, #{content}, NOW())")
     void reviewCommentInsert(ReviewComment comment);
 
     //주어진 ID에 해당하는 후기에 대한 댓글 수정
-    @Update("UPDATE ReviewComment SET user_id=#{user_id}, content=#{content} WHERE id=#{id}")
+    @Update("UPDATE review_comment SET user_id=#{userId}, content=#{content} WHERE id=#{id}")
     void reviewCommentUpdate(ReviewComment comment);
 
     //주어진 ID에 해당하는 후기에 대한 댓글 삭제

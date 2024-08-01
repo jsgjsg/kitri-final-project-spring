@@ -15,17 +15,17 @@ public class ReviewCommentController {
 
     //후기에 대한 댓글을 작성 하기 위한 컨트롤러
     @PostMapping("/reviews/{reviewId}/comments")
-    public ReviewComment addReviewComment(@RequestBody ReviewComment reviewComment) {
+    public ReviewComment addReviewComment(@PathVariable Long reviewId, @RequestBody ReviewComment reviewComment) {
         //reviewCommentService 작성 한 후기에 대한 댓글 작성 로직을 가져온다.
-        reviewCommentService.addReviewComment(reviewComment);
+        reviewCommentService.addReviewComment(reviewId,reviewComment);
         return reviewComment;
     }
 
     //후기에 대한 댓글을 조회 하기 위한 컨트롤러
     @GetMapping("/reviews/{reviewId}/comments")
-    public List<ReviewComment> getReviewComments() {
+    public List<ReviewComment> getReviewComments(@PathVariable Long reviewId) {
         //reviewCommentService 작성 한 후기에 대한 댓글 조회 로직을 가져온다.
-        return reviewCommentService.getReviewComments();
+        return reviewCommentService.getReviewCommentsByReviewId(reviewId);
     }
 
     //후기에 대한 댓글을 수정 하기 위한 컨트롤러
