@@ -13,15 +13,19 @@ public interface FeedCommentMapper {
     List<FeedComment> selectAll();
 
     //주어진 ID에 해당하는 피드에 대한 댓글 조회
+    @Select("SELECT * FROM feed_comment WHERE feed_id = #{feedId}")
+    List<FeedComment> selectByFeedId(Long feedId);
+
+    //특정 ID 댓글 조회
     @Select("SELECT * FROM feed_comment WHERE id = #{id}")
     FeedComment selectById(Long id);
 
     //피드에 대한 댓글 추가
-    @Insert("INSERT INTO FeedComment(feed_id, content, create_at) VALUES (#{feed_id}, #{content}, #{create_at})")
+    @Insert("INSERT INTO feed_comment(feed_id, user_id, content, created_at) VALUES (#{feedId}, #{userId}, #{content}, NOW())")
     void feedCommentInsert(FeedComment comment);
 
     //주어진 ID에 해당하는 피드에 대한 댓글 수정
-    @Update("UPDATE FeedComment SET content=#{content} WHERE id=#{id}")
+    @Update("UPDATE feed_comment SET content=#{content} WHERE id=#{id}")
     void feedCommentUpdate(FeedComment comment);
 
     //주어진 ID에 해당하는 피드에 대한 댓글 삭제
