@@ -3,6 +3,7 @@ package com.kitri.bark_meow_party_server.service;
 import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.domain.ReviewComment;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.ReviewCommentWithUserDTO;
 import com.kitri.bark_meow_party_server.mapper.ReviewCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,14 +26,11 @@ public class ReviewCommentService {
         return reviewCommentMapper.selectAll();
     }
 
-//    public ReviewComment getReviewComment(Long id) {
-//        return reviewCommentMapper.selectById(id);
-//    }
-
     // 특정 후기 ID에 대한 댓글 조회
-    public List<ReviewComment> getReviewCommentsByReviewId(Long reviewId) {
+    public List<ReviewCommentWithUserDTO> getReviewCommentsByReviewId(Long reviewId) {
         return reviewCommentMapper.selectByReviewId(reviewId);
     }
+
     //후기에 대한 댓글 작성
     public void addReviewComment(Long reviewId, ReviewComment reviewComment) {
         //로그인 한 유저로 작성자를 고정 시키기 위한 로직
