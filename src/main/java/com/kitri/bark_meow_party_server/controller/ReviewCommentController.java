@@ -33,6 +33,7 @@ public class ReviewCommentController {
     public ReviewComment updateReviewComment(@RequestBody ReviewComment reviewComment,
                                              @PathVariable long reviewId, @PathVariable long commentId) {
         reviewComment.setReviewId(reviewId);
+        reviewComment.setId(commentId);
         //reviewCommentService 작성 한 후기에 대한 댓글 수정 로직을 가져온다.
         reviewCommentService.updateReviewComment(reviewComment);
         return reviewComment;

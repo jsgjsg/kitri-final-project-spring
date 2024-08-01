@@ -59,14 +59,6 @@ public class ReviewCommentService {
 
     //후기에 대한 댓글 수정
     public void updateReviewComment(ReviewComment reviewComment) {
-        //로그인 한 유저로 작성자를 고정 시키기 위한 로직
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
-
-        User user = userService.findByUsername(username);
-        reviewComment.setId(user.getId());
-
-        //후기 댓글 수정
         reviewCommentMapper.reviewCommentUpdate(reviewComment);
     }
 
