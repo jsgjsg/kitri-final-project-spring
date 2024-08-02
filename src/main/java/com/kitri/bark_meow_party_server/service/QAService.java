@@ -1,10 +1,15 @@
 package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.QA;
+import com.kitri.bark_meow_party_server.domain.Question;
+import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.mapper.QAMapper;
 import com.kitri.bark_meow_party_server.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,11 +19,40 @@ public class QAService {
     QAMapper qaMapper;
     @Autowired
     QuestionMapper questionMapper;
+    @Autowired
+    UserService userService;
 
     public List<QA> getQA() {
         return qaMapper.selectAll();
     }
     public QA getQAById(Long id) {
         return qaMapper.selectById(id);
+    }
+    public QA getQAByuserId(Long userId){
+        return qaMapper.selectByUserId(userId);
+    }
+
+    @Transactional
+    public void insertQA(QA qa, Question question) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userService.findByUsername(username);
+        qa.setUserId(user.getId());
+
+        qaMapper.QaInsert(qa);
+        questionMapper.questionInsert(question);
+    }
+
+    @Transactional
+    public void updateQA(QA qa, Question question) {
+        qaMapper.QaUpdate(qa);
+        questionMapper.questionUpdate(question);
+    }
+
+    @Transactional
+    public void deleteQAById(Long id) {
+        qaMapper.QaDelete(id);
+        questionMapper.questionDelete(id);
     }
 }

@@ -11,12 +11,14 @@ public interface QAMapper {
     List<QA> selectAll();
     @Select("SELECT * FROM qa WHERE title = #{title}")
     QA selectByTitle(String title);
+    @Select("SELECT * FROM qa WHERE user_id=#{userId}")
+    QA selectByUserId(Long userId);
     @Select("SELECT * FROM qa WHERE id=#{id}")
     QA selectById(Long id);
-    @Insert("INSERT INTO qa(title, created_at) VALUES (#{title}, Now())")
+    @Insert("INSERT INTO qa(user_id, title, created_at) VALUES (#{userId}, #{title}, Now())")
     void QaInsert(QA qa);
     @Update("UPDATE qa SET title=#{title} WHERE id=#{id}")
     void QaUpdate(QA qa);
     @Delete("DELETE FROM qa WHERE id=#{id}")
-    void QaDelete(QA qa);
+    void QaDelete(Long id);
 }

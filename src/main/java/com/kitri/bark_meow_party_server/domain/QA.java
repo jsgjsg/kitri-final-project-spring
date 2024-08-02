@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class QA {
     private Long id;
+    private Long userId;
     private String title;
     private LocalDateTime createdAt;
 }
