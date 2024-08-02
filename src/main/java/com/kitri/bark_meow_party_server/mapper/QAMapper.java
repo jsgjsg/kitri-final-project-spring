@@ -16,7 +16,8 @@ public interface QAMapper {
     @Select("SELECT * FROM qa WHERE id=#{id}")
     QA selectById(Long id);
     @Insert("INSERT INTO qa(user_id, title, created_at) VALUES (#{userId}, #{title}, Now())")
-    void QaInsert(QA qa);
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    Long QaInsert(QA qa);
     @Update("UPDATE qa SET title=#{title} WHERE id=#{id}")
     void QaUpdate(QA qa);
     @Delete("DELETE FROM qa WHERE id=#{id}")
