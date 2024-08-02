@@ -1,7 +1,7 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.QA;
-import com.kitri.bark_meow_party_server.domain.QaQuestion;
+import com.kitri.bark_meow_party_server.dto.QaQuestionDTO;
 import com.kitri.bark_meow_party_server.domain.Question;
 import com.kitri.bark_meow_party_server.service.QAService;
 import com.kitri.bark_meow_party_server.service.QuestionService;
@@ -24,10 +24,8 @@ public class QAController {
     }
 
     @PostMapping("/qa")
-    public void createQA(@RequestBody QaQuestion qaQuestion) {
-        QA qa = qaQuestion.getQa();
-        Question question = qaQuestion.getQuestion();
-        qaService.insertQA(qa, question);
+    public void createQA(@RequestBody QaQuestionDTO qaQuestion) {
+        qaService.insertQA(qaQuestion);
     }
 }
 

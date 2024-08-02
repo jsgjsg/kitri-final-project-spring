@@ -3,6 +3,7 @@ package com.kitri.bark_meow_party_server.service;
 import com.kitri.bark_meow_party_server.domain.QA;
 import com.kitri.bark_meow_party_server.domain.Question;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.QaQuestionDTO;
 import com.kitri.bark_meow_party_server.mapper.QAMapper;
 import com.kitri.bark_meow_party_server.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class QAService {
     QuestionMapper questionMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    QuestionService questionService;
 
     public List<QA> getQA() {
         return qaMapper.selectAll();
@@ -33,15 +36,22 @@ public class QAService {
     }
 
     @Transactional
-    public void insertQA(QA qa, Question question) {
+    public Long insertQA(QaQuestionDTO qaQuestion) {
+        QA qa = qaQuestion.getQa();
+        Question question = qaQuestion.getQuestion();
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         User user = userService.findByUsername(username);
         qa.setUserId(user.getId());
 
-        qaMapper.QaInsert(qa);
-        questionMapper.questionInsert(question);
+        Long qaId = qaMapper.QaInsert(qa);
+        question.setQaId(qa.getId());
+
+        questionService.addQuestion(question);
+
+        return qaId;
     }
 
     @Transactional

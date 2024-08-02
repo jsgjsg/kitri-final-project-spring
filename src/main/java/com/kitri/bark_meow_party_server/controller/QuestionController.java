@@ -13,23 +13,21 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-//    @PostMapping("/reviews/{reviewId}/comments")
-//    public ReviewComment addReviewComment(@PathVariable Long reviewId, @RequestBody ReviewComment reviewComment) {
-//        //reviewCommentService 작성 한 후기에 대한 댓글 작성 로직을 가져온다.
-//        reviewCommentService.addReviewComment(reviewId,reviewComment);
-//        return reviewComment;
-//    }
     @PostMapping("/{qaId}/questions")
     public Question createQuestion(@PathVariable Long qaId, @RequestBody Question question) {
+        question.setQaId(qaId);
+        System.out.println("Created question: " + question);
         questionService.addQuestion(question);
         return question;
     }
     @GetMapping("/{qaId}/questions")
-    public List<Question> getQuestions(@PathVariable Long qaId) {
-        return questionService.getQuestions();
+    public List<Question> getAllQuestions(@PathVariable Long qaId) {
+        return questionService.getQuestionByQaId(qaId);
     }
     @PutMapping("/{qaId}/questions/{questionId}")
     public void updateQuestion(@PathVariable Long qaId, @PathVariable Long questionId, @RequestBody Question question) {
+        question.setId(questionId);
+        question.setQaId(qaId);
         questionService.updateQuestion(question);
     }
     @DeleteMapping("/{qaId}/questions/{questionId}")
