@@ -30,7 +30,8 @@ public class FeedController {
 
     // 특정 ID의 피드를 저장
     @PostMapping("")
-    public Feed save(Feed feed) {
+    public Feed save(@RequestBody Feed feed) {
+        System.out.println(feed);
         return feedService.saveFeed(feed);
     }
 
