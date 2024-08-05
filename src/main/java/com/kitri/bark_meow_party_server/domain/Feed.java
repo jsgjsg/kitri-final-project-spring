@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Feed {
     private long id;
-    private long user_id;
+    private long userId;
     private String image;
     private String content;
     private String animal;
