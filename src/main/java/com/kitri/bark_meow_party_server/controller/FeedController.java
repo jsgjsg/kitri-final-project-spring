@@ -18,13 +18,12 @@ public class FeedController {
 
     // 모든 피드 목록을 조회
     @GetMapping("")
-    public List<Feed> list() {
-        return feedService.getFeeds();
+    public List<Feed> getFeeds() {
+        return feedService.getAllFeeds();
     }
 
-    // 특정 피드를 ID를 통해 조회
     @GetMapping("/{id}")
-    public Feed get(@PathVariable int id) {
+    public Feed get(@PathVariable Long id) {
         return feedService.getFeedById(id);
     }
 
@@ -37,14 +36,13 @@ public class FeedController {
 
     //특정 ID의 피드 수정
     @PutMapping("/{feedId}")
-    public void update(@PathVariable long feedId, @RequestBody Feed feed) {
+    public void update(@PathVariable Long feedId, @RequestBody Feed feed) {
         feed.setId(feedId);
         feedService.updateFeed(feed);
     }
-
     // 삭제
     @DeleteMapping("/{feedId}")
-    public void delete(@PathVariable long feedId) {
+    public void delete(@PathVariable Long feedId) {
         feedService.deleteFeedById(feedId);
     }
 }

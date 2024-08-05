@@ -1,21 +1,18 @@
-package com.kitri.bark_meow_party_server.domain;
+package com.kitri.bark_meow_party_server.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Feed {
+public class FeedCommentWithUserDTO extends ProfileResponseDTO {
     private long id;
     private long userId;
-    private String image;
+    private long feedId;
     private String content;
-    private String animal;
     private LocalDateTime createdAt;
 }

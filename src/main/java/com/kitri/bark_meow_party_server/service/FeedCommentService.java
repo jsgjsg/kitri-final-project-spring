@@ -2,6 +2,7 @@ package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.FeedComment;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.FeedCommentWithUserDTO;
 import com.kitri.bark_meow_party_server.mapper.FeedCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,7 +25,7 @@ public class FeedCommentService {
         return feedCommentMapper.selectAll();
     }
     //주어진 ID에 해당하는 피드 댓글을 조회
-    public List<FeedComment> getFeedCommentsByFeedId(Long feedId) {
+    public List<FeedCommentWithUserDTO> getFeedCommentsByFeedId(Long feedId) {
         return feedCommentMapper.selectByFeedId(feedId);
     }
     //새 피드 댓글을 데이터베이스에 추가

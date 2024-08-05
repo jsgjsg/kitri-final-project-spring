@@ -1,5 +1,6 @@
 package com.kitri.bark_meow_party_server.mapper;
 import com.kitri.bark_meow_party_server.domain.Feed;
+import com.kitri.bark_meow_party_server.domain.Review;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -10,21 +11,18 @@ public interface FeedMapper {
     @Select("SELECT * FROM feed")
     List<Feed> findAll();
 
-    // 피드 한 개씩 보기
-    @Select("SELECT * From feed where user_id = #{user_id}")
-    Feed findById(long user_id);
+    @Select("SELECT * From feed where id = #{id}")
+    Feed findById(Long id);
 
     // 피드 삽입
-    @Insert("INSERT INTO feed(user_id, image, content, animal) VALUES (#{user_id}, #{image}, #{content}, #{animal})")
+    @Insert("INSERT INTO feed(user_id, image, content, animal) VALUES (#{userId}, #{image}, #{content}, #{animal})")
     @Options(useGeneratedKeys=true, keyProperty="id")
     void insert(Feed feed);
-
     // 피드 업데이트
-    @Update("UPDATE Feed set image=#{image}, content=#{content}, animal=#{animal}) where id =#{id}")
-    void update(Feed Feed);
-
+    @Update("UPDATE feed SET user_id=#{userId}, image=#{image}, content=#{content}, animal=#{animal} WHERE id=#{id}")
+    void update(Feed feed);
     // 피드 삭제
-    @Delete("DELETE from feed where id = #{feedId}")
-    void delete(long feedId);
+    @Delete("DELETE FROM feed WHERE id = #{id}")
+    void delete(Long id);
 }
 

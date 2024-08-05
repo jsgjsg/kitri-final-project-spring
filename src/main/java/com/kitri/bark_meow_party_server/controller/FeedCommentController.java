@@ -1,6 +1,7 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.FeedComment;
+import com.kitri.bark_meow_party_server.dto.FeedCommentWithUserDTO;
 import com.kitri.bark_meow_party_server.service.FeedCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class FeedCommentController {
     }
     //피드에 대한 댓글을 조회 하기 위한 컨트롤러
     @GetMapping("/feeds/{feedId}/comments")
-    public List<FeedComment> getFeedComments(@PathVariable Long feedId) {
+    public List<FeedCommentWithUserDTO> getFeedComments(@PathVariable Long feedId) {
         return feedCommentService.getFeedCommentsByFeedId(feedId);
     }
     //피드에 대한 댓글을 수정 하기 위한 컨트롤러
