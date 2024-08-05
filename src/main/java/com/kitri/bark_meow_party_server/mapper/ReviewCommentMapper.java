@@ -22,6 +22,9 @@ public interface ReviewCommentMapper {
             "WHERE review_id = #{reviewId}")
     List<ReviewCommentWithUserDTO> selectByReviewId(Long reviewId);
 
+    //특정 유저 조회
+    @Select("SELECT * FROM review_comment WHERE user_id=#{userId}")
+    List<ReviewComment> selectByUserId(Long userId);
     // 특정 댓글 ID로 조회
     @Select("SELECT * FROM review_comment WHERE id = #{id}")
     ReviewComment selectById(Long id);

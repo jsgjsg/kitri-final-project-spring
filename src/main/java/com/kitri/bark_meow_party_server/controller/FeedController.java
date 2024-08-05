@@ -26,6 +26,10 @@ public class FeedController {
     public Feed get(@PathVariable Long id) {
         return feedService.getFeedById(id);
     }
+    @GetMapping("/user/{userId}")
+    public List<Feed> getByUserId(@PathVariable Long userId) {
+        return feedService.getFeedsByUserId(userId);
+    }
 
     // 특정 ID의 피드를 저장
     @PostMapping("")

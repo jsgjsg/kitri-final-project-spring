@@ -23,6 +23,10 @@ public class AnswerController {
     public List<Answer> getByQaId(@PathVariable Long qaId) {
         return answerService.getByQaId(qaId);
     }
+    @GetMapping("/{qaId}/answers/{userId}")
+    public List<Answer> getAnswer(@PathVariable Long qaId, @PathVariable Long doctorId) {
+        return answerService.getAnswerByDoctorId(doctorId);
+    }
     @PutMapping("/{qaId}/answers/{answerId}")
     public void updateAnswer(@PathVariable Long qaId, @PathVariable Long answerId, @RequestBody Answer answer) {
         answer.setId(answerId);

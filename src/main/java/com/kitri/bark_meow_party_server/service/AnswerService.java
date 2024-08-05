@@ -24,6 +24,9 @@ public class AnswerService {
         answerMapper.getAll();
         return answerMapper.getAll();
     }
+    public List<Answer> getAnswerByDoctorId(Long doctorId) {
+        return answerMapper.getByDoctorId(doctorId);
+    }
     public Answer getAnswerById(Long id) {
         return answerMapper.getById(id);
     }

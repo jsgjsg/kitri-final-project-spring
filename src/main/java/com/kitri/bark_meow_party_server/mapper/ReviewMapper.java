@@ -12,8 +12,12 @@ public interface ReviewMapper {
     List<Review> selectAll();
 
     //주어진 ID에 해당하는 후기조회
-    @Select("SELECT * FROM Reivew WHERE id = #{id}")
+    @Select("SELECT * FROM review WHERE id = #{id}")
     Review selectById(Long id);
+
+    //주어진 유저의 후기 조회
+    @Select("SELECT * FROM review WHERE user_id=#{userId}")
+    List<Review> selectByUserId(Long userId);
 
     //주어진 카테고리에 해당하는 후기 조회
     @Select("SELECT * FROM Review WHERE category = #{category}")

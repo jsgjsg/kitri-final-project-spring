@@ -25,6 +25,10 @@ public class FeedCommentController {
     public List<FeedCommentWithUserDTO> getFeedComments(@PathVariable Long feedId) {
         return feedCommentService.getFeedCommentsByFeedId(feedId);
     }
+    @GetMapping("/feeds/{feedId}/comments/{userId}")
+    public List<FeedComment> getFeedComment(@PathVariable Long feedId, @PathVariable Long userId) {
+        return feedCommentService.getFeedCommentByUserId(userId);
+    }
     //피드에 대한 댓글을 수정 하기 위한 컨트롤러
     @PutMapping("/feeds/{feedId}/comments/{commentId}")
     public FeedComment updateFeedComment(@RequestBody FeedComment feedComment,

@@ -31,6 +31,11 @@ public class ReviewCommentService {
         return reviewCommentMapper.selectByReviewId(reviewId);
     }
 
+    //특정 유저 후기 댓글 조회
+    public List<ReviewComment> getReviewCommentsByUserId(Long userId) {
+        return reviewCommentMapper.selectByUserId(userId);
+    }
+
     //후기에 대한 댓글 작성
     public void addReviewComment(Long reviewId, ReviewComment reviewComment) {
         //로그인 한 유저로 작성자를 고정 시키기 위한 로직

@@ -31,7 +31,7 @@ public class QAService {
     public QA getQAById(Long id) {
         return qaMapper.selectById(id);
     }
-    public QA getQAByuserId(Long userId){
+    public List<QA> getQAByuserId(Long userId){
         return qaMapper.selectByUserId(userId);
     }
 
