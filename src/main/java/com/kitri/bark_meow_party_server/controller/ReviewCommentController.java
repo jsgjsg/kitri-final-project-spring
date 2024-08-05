@@ -29,6 +29,12 @@ public class ReviewCommentController {
         return reviewCommentService.getReviewCommentsByReviewId(reviewId);
     }
 
+    //유저 후기댓글을 조회 하기 위한 컨트롤러
+    @GetMapping("/reviews/{reviewId}/comments/{userId}")
+    public List<ReviewComment> getReviewComments(@PathVariable Long reviewId, @PathVariable Long userId) {
+        return reviewCommentService.getReviewCommentsByUserId(userId);
+    }
+
     //후기에 대한 댓글을 수정 하기 위한 컨트롤러
     @PutMapping("/reviews/{reviewId}/comments/{commentId}")
     public ReviewComment updateReviewComment(@RequestBody ReviewComment reviewComment,

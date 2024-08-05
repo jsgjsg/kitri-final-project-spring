@@ -1,5 +1,6 @@
 package com.kitri.bark_meow_party_server.service;
 
+import com.kitri.bark_meow_party_server.domain.Feed;
 import com.kitri.bark_meow_party_server.domain.FeedComment;
 import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.dto.FeedCommentWithUserDTO;
@@ -23,6 +24,9 @@ public class FeedCommentService {
     //모든 피드 댓글을 조회
     public List<FeedComment> getFeedComments() {
         return feedCommentMapper.selectAll();
+    }
+    public List<FeedComment> getFeedCommentByUserId(Long userId) {
+        return feedCommentMapper.selectByUserId(userId);
     }
     //주어진 ID에 해당하는 피드 댓글을 조회
     public List<FeedCommentWithUserDTO> getFeedCommentsByFeedId(Long feedId) {

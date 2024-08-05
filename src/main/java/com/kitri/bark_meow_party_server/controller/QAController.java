@@ -2,7 +2,6 @@ package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.QA;
 import com.kitri.bark_meow_party_server.dto.QaQuestionDTO;
-import com.kitri.bark_meow_party_server.domain.Question;
 import com.kitri.bark_meow_party_server.service.QAService;
 import com.kitri.bark_meow_party_server.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,11 @@ public class QAController {
     @GetMapping("/qa")
     public List<QA> getQA() {
         return qaService.getQA();
+    }
+
+    @GetMapping("/qa/{userId}")
+    public List<QA> getQuestion(@PathVariable Long userId) {
+        return qaService.getQAByuserId(userId);
     }
 
     @PostMapping("/qa")

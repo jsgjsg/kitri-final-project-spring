@@ -12,7 +12,7 @@ public interface QuestionMapper {
     @Select("SELECT * FROM question WHERE id=#{id}")
     Question selectById(Long id);
     @Select("SELECT * FROM question WHERE user_id=#{userId}")
-    Question selectByUserId(Long userId);
+    List<Question> selectByUserId(Long userId);
     @Select("SELECT * FROM question WHERE qa_id = #{qaId}")
     List<Question> selectByQaId(Long qaId);
     @Insert("INSERT INTO question (user_id, qa_id, question) VALUES (#{userId}, #{qaId}, #{question})")

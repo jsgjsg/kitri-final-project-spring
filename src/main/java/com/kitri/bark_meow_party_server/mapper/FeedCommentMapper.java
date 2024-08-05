@@ -21,6 +21,9 @@ public interface FeedCommentMapper {
             "WHERE feed_id = #{feedId}")
     List<FeedCommentWithUserDTO> selectByFeedId(Long feedId);
 
+    @Select("SELECT * FROM feed_comment WHERE user_id=#{userId}")
+    List<FeedComment> selectByUserId(Long userId);
+
     //특정 ID 댓글 조회
     @Select("SELECT * FROM feed_comment WHERE id = #{id}")
     FeedComment selectById(Long id);
