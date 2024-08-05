@@ -8,9 +8,10 @@ import java.util.List;
 @Mapper
 public interface FeedMapper {
     // 피드 전체보기
-    @Select("SELECT * FROM feed")
+    @Select("SELECT * FROM Feed")
     List<Feed> findAll();
 
+    // 피드 한 개씩 보기
     @Select("SELECT * From feed where id = #{id}")
     Feed findById(Long id);
 
