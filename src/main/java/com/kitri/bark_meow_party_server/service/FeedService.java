@@ -25,6 +25,9 @@ public class FeedService {
     public Feed getFeedById(Long id) {
         return feedMapper.findById(id);
     }
+    public List<Feed> getFeedsByUserId(Long userId) {
+        return feedMapper.findByUserId(userId);
+    }
     public Feed saveFeed(Feed feed) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

@@ -16,6 +16,9 @@ public interface FeedMapper {
     @Select("SELECT * From feed where id = #{id}")
     Feed findById(Long id);
 
+    @Select("SELECT * FROM feed WHERE user_id=#{userId}")
+    List<Feed> findByUserId(Long userId);
+
     // 피드 삽입
     @Insert("INSERT INTO feed(user_id, image, content, animal) VALUES (#{userId}, #{image}, #{content}, #{animal})")
     @Options(useGeneratedKeys=true, keyProperty="id")

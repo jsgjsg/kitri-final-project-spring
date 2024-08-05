@@ -21,7 +21,7 @@ public class QuestionService {
     public List<Question> getQuestions() {
         return questionMapper.selectAll();
     }
-    public Question getQuestionByUserId(Long userId) {
+    public List<Question> getQuestionByUserId(Long userId) {
         return questionMapper.selectByUserId(userId);
     }
     public Question getQuestionById(Long id) {

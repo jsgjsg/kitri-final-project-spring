@@ -27,6 +27,10 @@ public class ReviewService {
         return reviewMapper.selectById(id);
     }
 
+    public List<Review> findByUserId(Long userId) {
+        return reviewMapper.selectByUserId(userId);
+    }
+
     //후기 작성
     public void create(Review review) {
         //로그인 한 유저로 작성자를 고정 시키기 위한 로직

@@ -32,6 +32,12 @@ public class ReviewController {
         return reviewService.findAll();
     }
 
+    @GetMapping("/reviews/{userId}")
+    public List<Review> getReview(@PathVariable Long userId) {
+        reviewService.findByUserId(userId);
+        return reviewService.findByUserId(userId);
+    }
+
     //후기를 수정하기 위한 컨트롤러
     @PutMapping("/reviews/{reviewId}")
     public Review updateReview(@PathVariable long reviewId, @RequestBody Review review) {
