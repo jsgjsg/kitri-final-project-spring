@@ -19,12 +19,13 @@ public class FeedController {
     // 모든 피드 목록을 조회
     @GetMapping("")
     public List<Feed> list() {
-        return feedService.getFeeds();
+        List<Feed> feeds = feedService.getFeeds();
+        return feeds;
     }
 
     // 특정 피드를 ID를 통해 조회
     @GetMapping("/{id}")
-    public Feed get(@PathVariable int id) {
+    public Feed get(@PathVariable long id) {
         return feedService.getFeedById(id);
     }
 
@@ -48,4 +49,3 @@ public class FeedController {
         feedService.deleteFeedById(feedId);
     }
 }
-

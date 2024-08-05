@@ -7,20 +7,20 @@ import java.util.List;
 @Mapper
 public interface FeedMapper {
     // 피드 전체보기
-    @Select("SELECT * FROM feed")
+    @Select("SELECT * FROM Feed")
     List<Feed> findAll();
 
     // 피드 한 개씩 보기
-    @Select("SELECT * From feed where user_id = #{user_id}")
-    Feed findById(long user_id);
+    @Select("SELECT * From feed where user_id = #{userId}")
+    Feed findById(long userId);
 
     // 피드 삽입
-    @Insert("INSERT INTO feed(user_id, image, content, animal) VALUES (#{user_id}, #{image}, #{content}, #{animal})")
+    @Insert("INSERT INTO feed(user_id, image, content, animal) VALUES (#{userId}, #{image}, #{content}, #{animal})")
     @Options(useGeneratedKeys=true, keyProperty="id")
     void insert(Feed feed);
 
     // 피드 업데이트
-    @Update("UPDATE Feed set image=#{image}, content=#{content}, animal=#{animal}) where id =#{id}")
+    @Update("UPDATE Feed SET image=#{image}, content=#{content}, animal=#{animal} WHERE id=#{id}")
     void update(Feed Feed);
 
     // 피드 삭제
