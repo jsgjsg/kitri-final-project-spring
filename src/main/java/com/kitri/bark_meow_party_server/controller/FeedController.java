@@ -1,10 +1,9 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.Feed;
-import com.kitri.bark_meow_party_server.mapper.FeedMapper;
 import com.kitri.bark_meow_party_server.service.FeedService;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,5 +43,10 @@ public class FeedController {
     @DeleteMapping("/{feedId}")
     public void delete(@PathVariable Long feedId) {
         feedService.deleteFeedById(feedId);
+    }
+
+    @PostMapping("{feedId}/like")
+    public ResponseEntity<Integer> likeFeed(@PathVariable Long feedId) {
+        return ResponseEntity.ok(feedService.likeFeed(feedId));
     }
 }
