@@ -1,0 +1,7 @@
+package com.kitri.bark_meow_party_server.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class DoctorController {
+}
