@@ -11,7 +11,7 @@ public interface AnswerMapper {
     List<Answer> getAll();
     @Select("SELECT * FROM answer WHERE id=#{id}")
     Answer getById(Long id);
-    @Select("SELECT * FROM answer WHERE qa_id={qaId}")
+    @Select("SELECT * FROM answer WHERE qa_id=#{qaId}")
     List<Answer> getByQaId(Long qaId);
     @Insert("INSERT INTO answer (doctor_id, qa_id, answer) VALUES (#{doctorId}, #{qaId}, #{answer})")
     void createAnswer(Answer answer);

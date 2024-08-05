@@ -8,6 +8,7 @@ import lombok.Setter;
 public class Answer {
     private Long id;
     private Long doctorId;
+    private Long userId;
     private Long qaId;
     private String answer;
 }
