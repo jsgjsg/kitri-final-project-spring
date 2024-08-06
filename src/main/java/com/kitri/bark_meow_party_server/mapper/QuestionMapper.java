@@ -19,6 +19,6 @@ public interface QuestionMapper {
     void questionInsert(Question question);
     @Update("UPDATE question SET question=#{question} WHERE id=#{id}")
     void questionUpdate(Question question);
-    @Delete("DELETE FROM question WHERE id=#{id}")
+    @Delete("DELETE FROM question WHERE qa_id=#{id}")
     void questionDelete(Long id);
 }
