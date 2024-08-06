@@ -19,20 +19,6 @@ public interface ReviewMapper {
     @Select("SELECT * FROM review WHERE user_id=#{userId}")
     List<Review> selectByUserId(Long userId);
 
-    //주어진 카테고리에 해당하는 후기 조회
-    @Select("SELECT * FROM Review WHERE category = #{category}")
-    List<Review> selectByCategory(String category);
-
-    //주어진 쿼리를 포함하는 후기 조회
-    @Select("SELECT * FROM Review WHERE " +
-            "item LIKE CONCAT('%', #{query}, '%') OR " +
-            "good LIKE CONCAT('%', #{query}, '%') OR " +
-            "bad LIKE CONCAT('%', #{query}, '%') OR " +
-            "tip LIKE CONCAT('%', #{query}, '%') OR " +
-            "repurchase LIKE CONCAT('%', #{query}, '%') OR " +
-            "animal LIKE CONCAT('%', #{query}, '%')")
-    List<Review> searchByQuery(String query);
-
     //새 후기를 추가
     @Insert("INSERT INTO Review(user_id, item, good, bad, tip, image, repurchase, satisfaction, animal, category ) VALUES (#{userId}, #{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction}, #{animal}, #{category})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
