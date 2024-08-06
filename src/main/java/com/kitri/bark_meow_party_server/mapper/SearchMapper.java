@@ -1,6 +1,7 @@
 package com.kitri.bark_meow_party_server.mapper;
 
 import com.kitri.bark_meow_party_server.domain.Feed;
+import com.kitri.bark_meow_party_server.domain.QA;
 import com.kitri.bark_meow_party_server.domain.Review;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -17,7 +18,9 @@ public interface SearchMapper {
             "tip LIKE CONCAT('%', #{query}, '%')")
     List<Review> searchByQuery(String query);
     //주어진 쿼리를 포함하는 피드 조회
-        @Select("SELECT * FROM feed WHERE content LIKE CONCAT('%', #{query}, '%')")
-        List<Feed> searchByFeedQuery(String query);
-
+    @Select("SELECT * FROM feed WHERE content LIKE CONCAT('%', #{query}, '%')")
+    List<Feed> searchByFeedQuery(String query);
+    //주어진 쿼리를 포함하는 qa 조회
+    @Select("SELECT * FROM qa WHERE title LIKE CONCAT('%', #{query}, '%')")
+    List<QA> searchByQaQuery(String query);
 }
