@@ -68,7 +68,7 @@ public class QAService {
 
     @Transactional
     public void deleteQAById(Long id) {
-        qaMapper.QaDelete(id);
         questionMapper.questionDelete(id);
+        qaMapper.QaDelete(id);
     }
 }
