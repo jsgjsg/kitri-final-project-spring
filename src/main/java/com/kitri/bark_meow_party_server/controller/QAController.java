@@ -36,5 +36,10 @@ public class QAController {
     public void createQA(@RequestBody QaQuestionDTO qaQuestion) {
         qaService.insertQA(qaQuestion);
     }
+
+    @DeleteMapping("/qa/{id}")
+    public void deleteQA(@PathVariable Long id) {
+        qaService.deleteQAById(id);
+    }
 }
 
