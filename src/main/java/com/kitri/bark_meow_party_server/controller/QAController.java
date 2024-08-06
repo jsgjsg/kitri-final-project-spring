@@ -27,6 +27,11 @@ public class QAController {
         return qaService.getQAByuserId(userId);
     }
 
+    @GetMapping("/qa/search")
+    public List<QA> searchQA(@RequestParam String query) {
+        return qaService.searchQA(query);
+    }
+
     @PostMapping("/qa")
     public void createQA(@RequestBody QaQuestionDTO qaQuestion) {
         qaService.insertQA(qaQuestion);
