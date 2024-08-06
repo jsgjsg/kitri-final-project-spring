@@ -1,6 +1,8 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.Feed;
+import com.kitri.bark_meow_party_server.dto.FeedDetailDTO;
+import com.kitri.bark_meow_party_server.dto.FeedWithUserDTO;
 import com.kitri.bark_meow_party_server.service.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ public class FeedController {
 
     // 모든 피드 목록을 조회
     @GetMapping("")
-    public List<Feed> getFeeds() {
+    public List<FeedDetailDTO> getFeeds() {
         return feedService.getAllFeeds();
     }
 
