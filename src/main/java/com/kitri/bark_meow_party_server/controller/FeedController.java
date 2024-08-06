@@ -51,6 +51,18 @@ public class FeedController {
         feedService.deleteFeedById(feedId);
     }
 
+    //동물분류
+    @GetMapping("/animal")
+    public List<Feed> getAnimals(@RequestParam String animal) {
+        return feedService.findByAnimal(animal);
+    }
+
+    //피드검색
+    @GetMapping("/search")
+    public List<Feed> getSearch(@RequestParam String query) {
+        return feedService.findFeedQuery(query);
+    }
+
     @PostMapping("{feedId}/like")
     public ResponseEntity<Integer> likeFeed(@PathVariable Long feedId) {
         return ResponseEntity.ok(feedService.likeFeed(feedId));

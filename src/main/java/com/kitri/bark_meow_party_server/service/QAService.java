@@ -6,6 +6,7 @@ import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.dto.QaQuestionDTO;
 import com.kitri.bark_meow_party_server.mapper.QAMapper;
 import com.kitri.bark_meow_party_server.mapper.QuestionMapper;
+import com.kitri.bark_meow_party_server.mapper.SearchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,8 @@ public class QAService {
     UserService userService;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    SearchMapper searchMapper;
 
     public List<QA> getQA() {
         return qaMapper.selectAll();
@@ -33,6 +36,9 @@ public class QAService {
     }
     public List<QA> getQAByuserId(Long userId){
         return qaMapper.selectByUserId(userId);
+    }
+    public List<QA> searchQA(String query) {
+        return searchMapper.searchByQaQuery(query);
     }
 
     @Transactional
