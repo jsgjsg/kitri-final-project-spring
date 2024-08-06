@@ -1,16 +1,17 @@
 package com.kitri.bark_meow_party_server.mapper;
 import com.kitri.bark_meow_party_server.domain.Feed;
-import com.kitri.bark_meow_party_server.domain.FeedLike;
-import com.kitri.bark_meow_party_server.domain.Review;
+import com.kitri.bark_meow_party_server.dto.FeedWithUserDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface FeedMapper {
-    // 피드 전체보기
-    @Select("SELECT * FROM Feed")
-    List<Feed> findAll();
+    @Select("SELECT * " +
+            "FROM feed f " +
+            "JOIN user u " +
+            "ON f.user_id = u.id ")
+    List<FeedWithUserDTO> findAll();
 
     // 피드 한 개씩 보기
     @Select("SELECT * From feed where id = #{id}")
