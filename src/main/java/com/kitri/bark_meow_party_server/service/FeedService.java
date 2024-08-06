@@ -3,7 +3,9 @@ package com.kitri.bark_meow_party_server.service;
 import com.kitri.bark_meow_party_server.domain.Feed;
 import com.kitri.bark_meow_party_server.domain.FeedLike;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.mapper.CategoryMapper;
 import com.kitri.bark_meow_party_server.mapper.FeedMapper;
+import com.kitri.bark_meow_party_server.mapper.SearchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,10 @@ public class FeedService {
    private FeedMapper feedMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CategoryMapper categoryMapper;
+    @Autowired
+    private SearchMapper searchMapper;
 
     public List<Feed> getAllFeeds() {
         return feedMapper.findAll();
@@ -49,6 +55,15 @@ public class FeedService {
     }
     public void deleteFeedById(Long id) {
        feedMapper.delete(id);
+    }
+
+    //동물분류
+    public List<Feed> findByAnimal(String animal) {
+        return categoryMapper.selectByFeedAnimal(animal);
+    }
+    //피드검색
+    public List<Feed> findFeedQuery(String query) {
+        return searchMapper.searchByFeedQuery(query);
     }
 
     @Transactional

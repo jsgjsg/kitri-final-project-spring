@@ -54,6 +54,12 @@ public class ReviewController {
         //reviewService에서 작성 한 후기 삭제 로직을 가져온다.
         reviewService.delete(reviewId);
     }
+    //동물분류
+    @GetMapping("/reviews/animal")
+    public List<Review> getReviewsAnimal(@RequestParam String animal) {
+        reviewService.findByAnimal(animal);
+        return reviewService.findByAnimal(animal);
+    }
 
     //카테고리 로직
     @GetMapping("/reviews/category")
@@ -68,7 +74,7 @@ public class ReviewController {
     //검색 로직
     @GetMapping("/reviews/search")
     public List<Review> getReviewsBySearch(@RequestParam String query) {
-        return reviewService.findByQuery(query);
+        return reviewService.searchByQuery(query);
     }
 //    @GetMapping("/reviews/search?query={query}")
 //    public String getSearchReviews(@PathVariable String query, Model model) {

@@ -2,7 +2,9 @@ package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.mapper.CategoryMapper;
 import com.kitri.bark_meow_party_server.mapper.ReviewMapper;
+import com.kitri.bark_meow_party_server.mapper.SearchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,10 @@ public class ReviewService {
     ReviewMapper reviewMapper;
     @Autowired //UserService 자동 의존성 주입
     UserService userService;
+    @Autowired
+    CategoryMapper categoryMapper;
+    @Autowired
+    SearchMapper searchMapper;
 
     //DB 후기 테이블 전체 조회
     public List<Review> findAll() {
@@ -62,13 +68,17 @@ public class ReviewService {
         reviewMapper.delete(id);
     }
 
+    //동물분류
+    public List<Review> findByAnimal(String animal) {
+        return categoryMapper.selectByAnimal(animal);
+    }
     //카테고리 분류
     public List<Review> findByCategory(String category) {
-        return reviewMapper.selectByCategory(category);
+        return categoryMapper.selectByCategory(category);
     }
 
     //검색
-    public List<Review> findByQuery(String query) {
-        return reviewMapper.searchByQuery(query);
+    public List<Review> searchByQuery(String query) {
+        return searchMapper.searchByQuery(query);
     }
 }
