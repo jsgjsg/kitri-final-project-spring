@@ -23,11 +23,11 @@ public interface FeedMapper {
     // 피드 삽입
     @Insert("INSERT INTO feed(user_id, image, content, animal) VALUES (#{userId}, #{image}, #{content}, #{animal})")
     @Options(useGeneratedKeys=true, keyProperty="id")
-    void insert(Feed feed);
+    void insert(FeedWithUserDTO feedWithUserDTO);
 
     // 피드 업데이트
     @Update("UPDATE feed SET user_id=#{userId}, image=#{image}, content=#{content}, animal=#{animal} WHERE id=#{id}")
-    void update(Feed feed);
+    void update(FeedWithUserDTO feedWithUserDTO);
 
     // 피드 삭제
     @Delete("DELETE FROM feed WHERE id = #{id}")

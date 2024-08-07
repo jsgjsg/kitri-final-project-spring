@@ -2,7 +2,6 @@ package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.Feed;
 import com.kitri.bark_meow_party_server.dto.FeedDetailDTO;
-import com.kitri.bark_meow_party_server.dto.FeedWithUserDTO;
 import com.kitri.bark_meow_party_server.service.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,16 +33,17 @@ public class FeedController {
 
     // 특정 ID의 피드를 저장
     @PostMapping("")
-    public Feed save(@RequestBody Feed feed) {
-        System.out.println(feed);
-        return feedService.saveFeed(feed);
+    public ResponseEntity<?> save(@RequestBody FeedDetailDTO feedDetailDTO) {
+        feedService.saveFeed(feedDetailDTO);
+
+        return ResponseEntity.ok("Feed 등록 완료");
     }
 
     //특정 ID의 피드 수정
     @PutMapping("/{feedId}")
-    public void update(@PathVariable Long feedId, @RequestBody Feed feed) {
-        feed.setId(feedId);
-        feedService.updateFeed(feed);
+    public void update(@PathVariable Long feedId, @RequestBody FeedDetailDTO feedDetailDTO) {
+        feedDetailDTO.getFeedWithUser().setId(feedId);
+        feedService.updateFeed(feedDetailDTO);
     }
     // 삭제
     @DeleteMapping("/{feedId}")
