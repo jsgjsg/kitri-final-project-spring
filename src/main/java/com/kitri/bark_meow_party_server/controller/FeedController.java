@@ -51,16 +51,16 @@ public class FeedController {
         feedService.deleteFeedById(feedId);
     }
 
-    //동물분류
+    //동물분류 // 필요없어짐
     @GetMapping("/animal")
-    public List<Feed> getAnimals(@RequestParam String animal) {
+    public List<FeedDetailDTO> getAnimals(@RequestParam String animal) {
         return feedService.findByAnimal(animal);
     }
 
-    //피드검색
+    //피드검색 - 검색어, 동물 분류 합쳐서.
     @GetMapping("/search")
-    public List<FeedDetailDTO> getSearch(@RequestParam String query) {
-        return feedService.findFeedQuery(query);
+    public List<FeedDetailDTO> getSearch(@RequestParam String query, @RequestParam String animal) {
+        return feedService.findFeedQuery(query, animal);
     }
 
     @PostMapping("{feedId}/like")

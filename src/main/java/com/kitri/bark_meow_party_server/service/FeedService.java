@@ -78,16 +78,35 @@ public class FeedService {
     }
 
     //동물분류
-    public List<Feed> findByAnimal(String animal) {
-        return categoryMapper.selectByFeedAnimal(animal);
-    }
-    //피드검색
-    public List<FeedDetailDTO> findFeedQuery(String query) {
+    public List<FeedDetailDTO> findByAnimal(String animal) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User user = userService.findByUsername(username);
 
-        List<FeedWithUserDTO> feeds = searchMapper.searchByFeedQuery(query);
+        List<FeedWithUserDTO> feeds = categoryMapper.selectByFeedAnimal(animal);
+
+        List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
+        for (FeedWithUserDTO feed : feeds) {
+            FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
+            feedDetailDTO.setFeedWithUser(feed);
+            feedDetailDTO.setLikeCount(feedMapper.getLikeCount(feed.getId()));
+            boolean isLiked = feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId());
+            feedDetailDTO.setLiked(isLiked);
+            feedDetailDTOs.add(feedDetailDTO);
+        }
+
+        return feedDetailDTOs;
+    }
+    //피드검색
+    public List<FeedDetailDTO> findFeedQuery(String query, String animal) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
+
+        List<FeedWithUserDTO> feeds;
+        if(animal.equals("all")) feeds = searchMapper.searchByFeedQuery(query);
+        else feeds = searchMapper.searchByFeedQueryAndAnimal(query, animal);
+
         List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
         for (FeedWithUserDTO feed : feeds) {
             FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
