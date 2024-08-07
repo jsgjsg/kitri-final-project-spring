@@ -59,7 +59,7 @@ public class FeedController {
 
     //피드검색
     @GetMapping("/search")
-    public List<Feed> getSearch(@RequestParam String query) {
+    public List<FeedDetailDTO> getSearch(@RequestParam String query) {
         return feedService.findFeedQuery(query);
     }
 

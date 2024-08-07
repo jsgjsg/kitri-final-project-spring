@@ -31,7 +31,6 @@ public class FeedService {
     public List<FeedDetailDTO> getAllFeeds() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-
         User user = userService.findByUsername(username);
 
         List<FeedWithUserDTO> feeds = feedMapper.findAll();
@@ -83,8 +82,25 @@ public class FeedService {
         return categoryMapper.selectByFeedAnimal(animal);
     }
     //피드검색
-    public List<Feed> findFeedQuery(String query) {
-        return searchMapper.searchByFeedQuery(query);
+    public List<FeedDetailDTO> findFeedQuery(String query) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
+
+        List<FeedWithUserDTO> feeds = searchMapper.searchByFeedQuery(query);
+        List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
+        for (FeedWithUserDTO feed : feeds) {
+            FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
+            feedDetailDTO.setFeedWithUser(feed);
+            feedDetailDTO.setLikeCount(feedMapper.getLikeCount(feed.getId()));
+
+            boolean isLiked = feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId());
+            feedDetailDTO.setLiked(isLiked);
+
+            feedDetailDTOs.add(feedDetailDTO);
+        }
+
+        return feedDetailDTOs;
     }
 
     @Transactional
