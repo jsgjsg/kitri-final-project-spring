@@ -5,6 +5,7 @@ import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.dto.FeedDetailDTO;
 import com.kitri.bark_meow_party_server.dto.FeedWithUserDTO;
 import com.kitri.bark_meow_party_server.mapper.CategoryMapper;
+import com.kitri.bark_meow_party_server.mapper.FeedHashtagMapper;
 import com.kitri.bark_meow_party_server.mapper.FeedMapper;
 import com.kitri.bark_meow_party_server.mapper.SearchMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,95 +27,86 @@ public class FeedService {
     private CategoryMapper categoryMapper;
     @Autowired
     private SearchMapper searchMapper;
+    @Autowired
+    private FeedHashtagMapper feedHashtagMapper;
 
     @Transactional
     public List<FeedDetailDTO> getAllFeeds() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userService.findByUsername(username);
 
         List<FeedWithUserDTO> feeds = feedMapper.findAll();
-        List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
-        for (FeedWithUserDTO feed : feeds) {
-            FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
-            feedDetailDTO.setFeedWithUser(feed);
-
-            feedDetailDTO.setLikeCount(feedMapper.getLikeCount(feed.getId()));
-
-            boolean isLiked = feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId());
-            feedDetailDTO.setLiked(isLiked);
-
-            feedDetailDTOs.add(feedDetailDTO);
-        }
-        return feedDetailDTOs;
+        return makeFeedDetailDTO(feeds);
     }
+
     public Feed getFeedById(Long id) {
         return feedMapper.findById(id);
     }
+
     public List<Feed> getFeedsByUserId(Long userId) {
         return feedMapper.findByUserId(userId);
     }
-    public Feed saveFeed(Feed feed) {
+
+    public void saveFeed(FeedDetailDTO feedDetailDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         User user = userService.findByUsername(username);
-        feed.setUserId(user.getId());
+        feedDetailDTO.getFeedWithUser().setUserId(user.getId());
 
-        feedMapper.insert(feed);
-        return feed;
+        feedMapper.insert(feedDetailDTO.getFeedWithUser());
+
+        feedDetailDTO.getFeedHashtags().forEach((tag) -> {
+            tag.setFeedId(feedDetailDTO.getFeedWithUser().getId());
+            feedHashtagMapper.insertFeedHashtag(tag);
+        });
     }
-    public void updateFeed(Feed feed) {
+
+    public void updateFeed(FeedDetailDTO feedDetailDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         User user = userService.findByUsername(username);
-        feed.setUserId(user.getId());
+        feedDetailDTO.getFeedWithUser().setUserId(user.getId());
 
-        feedMapper.update(feed);
+        feedMapper.update(feedDetailDTO.getFeedWithUser());
+
+        feedHashtagMapper.deleteFeedHashtag(feedDetailDTO.getFeedWithUser().getId());
+        feedDetailDTO.getFeedHashtags().forEach((tag) -> {
+            tag.setFeedId(feedDetailDTO.getFeedWithUser().getId());
+            feedHashtagMapper.insertFeedHashtag(tag);
+        });
     }
+
     public void deleteFeedById(Long id) {
        feedMapper.delete(id);
     }
 
     //동물분류
     public List<FeedDetailDTO> findByAnimal(String animal) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userService.findByUsername(username);
-
         List<FeedWithUserDTO> feeds = categoryMapper.selectByFeedAnimal(animal);
-
-        List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
-        for (FeedWithUserDTO feed : feeds) {
-            FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
-            feedDetailDTO.setFeedWithUser(feed);
-            feedDetailDTO.setLikeCount(feedMapper.getLikeCount(feed.getId()));
-            boolean isLiked = feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId());
-            feedDetailDTO.setLiked(isLiked);
-            feedDetailDTOs.add(feedDetailDTO);
-        }
-
-        return feedDetailDTOs;
+        return makeFeedDetailDTO(feeds);
     }
+
     //피드검색
     public List<FeedDetailDTO> findFeedQuery(String query, String animal) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userService.findByUsername(username);
-
         List<FeedWithUserDTO> feeds;
         if(animal.equals("all")) feeds = searchMapper.searchByFeedQuery(query);
         else feeds = searchMapper.searchByFeedQueryAndAnimal(query, animal);
+        return makeFeedDetailDTO(feeds);
+    }
+
+    public List<FeedDetailDTO> makeFeedDetailDTO(List<FeedWithUserDTO> feeds) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
 
         List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
         for (FeedWithUserDTO feed : feeds) {
             FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
+
             feedDetailDTO.setFeedWithUser(feed);
             feedDetailDTO.setLikeCount(feedMapper.getLikeCount(feed.getId()));
-
-            boolean isLiked = feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId());
-            feedDetailDTO.setLiked(isLiked);
+            feedDetailDTO.setLiked(feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId()));
+            feedDetailDTO.setFeedHashtags(feedHashtagMapper.findFeedHashtagByFeedId(feed.getId()));
 
             feedDetailDTOs.add(feedDetailDTO);
         }
