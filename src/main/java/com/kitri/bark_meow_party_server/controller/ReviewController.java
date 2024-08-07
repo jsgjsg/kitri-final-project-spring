@@ -72,8 +72,8 @@ public class ReviewController {
 
     //검색 로직
     @GetMapping("/reviews/search")
-    public List<ReviewDetailDTO> getReviewsBySearch(@RequestParam String query) {
-        return reviewService.searchByQuery(query);
+    public List<ReviewDetailDTO> getReviewsBySearch(@RequestParam String query, @RequestParam String animal, @RequestParam String category) {
+        return reviewService.searchByQuery(query, animal, category);
     }
 //    @GetMapping("/reviews/search?query={query}")
 
