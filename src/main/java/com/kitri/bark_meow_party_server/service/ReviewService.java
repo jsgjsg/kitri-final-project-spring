@@ -100,15 +100,39 @@ public class ReviewService {
         return categoryMapper.selectByCategory(category);
     }
     //검색
-    public List<ReviewDetailDTO> searchByQuery(String query){
+//        List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
+//        for (FeedWithUserDTO feed : feeds) {
+//            FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
+//            feedDetailDTO.setFeedWithUser(feed);
+//            feedDetailDTO.setLikeCount(feedMapper.getLikeCount(feed.getId()));
+//
+//            boolean isLiked = feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId());
+//            feedDetailDTO.setLiked(isLiked);
+//
+//            feedDetailDTOs.add(feedDetailDTO);
+//        }
+//
+//        return feedDetailDTOs;
+//    }
+    public List<ReviewDetailDTO> searchByQuery(String query, String animal, String category){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User user = userService.findByUsername(username);
 
-        List<ReviewWithUserDTO> feeds = searchMapper.searchByQuery(query);
+        List<ReviewWithUserDTO> reviews;
+        if (animal.equals("all") && category.equals("all")) {
+            reviews = searchMapper.searchByQuery(query);
+        } else if (!animal.equals("all") && category.equals("all")) {
+            reviews = searchMapper.searchByReviewQueryAndAnimal(query, animal);
+        } else if (animal.equals("all") && !category.equals("all")) {
+            reviews = searchMapper.searchByReviewQueryAndCategory(query, category);
+        } else {
+            reviews = searchMapper.searchByReviewQueryAndAnimalCategory(query, animal, category);
+        }
+
         List<ReviewDetailDTO> reviewDetailDTOS = new ArrayList<>();
 
-        for (ReviewWithUserDTO review : feeds) {
+        for (ReviewWithUserDTO review : reviews) {
             ReviewDetailDTO reviewDetailDTO = new ReviewDetailDTO();
             reviewDetailDTO.setReviewWithUser(review);
             reviewDetailDTO.setLikeCount(reviewMapper.countLikeReview(review.getId()));
