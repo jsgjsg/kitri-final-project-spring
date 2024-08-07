@@ -2,6 +2,7 @@ package com.kitri.bark_meow_party_server.mapper;
 
 import com.kitri.bark_meow_party_server.domain.Feed;
 import com.kitri.bark_meow_party_server.domain.Review;
+import com.kitri.bark_meow_party_server.dto.FeedWithUserDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -14,6 +15,10 @@ public interface CategoryMapper {
     List<Review> selectByCategory(String category);
     @Select("SELECT * FROM review WHERE animal = #{animal}")
     List<Review> selectByAnimal(String animal);
-    @Select("SELECT * FROM feed WHERE animal = #{animal}")
-    List<Feed> selectByFeedAnimal(String animal);
+    @Select("SELECT * " +
+            "FROM feed f " +
+            "JOIN user u " +
+            "ON f.user_id = u.id " +
+            "WHERE animal = #{animal}")
+    List<FeedWithUserDTO> selectByFeedAnimal(String animal);
 }
