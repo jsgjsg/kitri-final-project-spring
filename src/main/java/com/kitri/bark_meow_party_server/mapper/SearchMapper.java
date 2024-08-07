@@ -4,6 +4,8 @@ import com.kitri.bark_meow_party_server.domain.Feed;
 import com.kitri.bark_meow_party_server.domain.QA;
 import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.dto.FeedWithUserDTO;
+import com.kitri.bark_meow_party_server.dto.ReviewDetailDTO;
+import com.kitri.bark_meow_party_server.dto.ReviewWithUserDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -17,7 +19,7 @@ public interface SearchMapper {
             "good LIKE CONCAT('%', #{query}, '%') OR " +
             "bad LIKE CONCAT('%', #{query}, '%') OR " +
             "tip LIKE CONCAT('%', #{query}, '%')")
-    List<Review> searchByQuery(String query);
+    List<ReviewWithUserDTO> searchByQuery(String query);
     //주어진 쿼리를 포함하는 피드 조회
     @Select("SELECT * " +
             "FROM feed f " +
