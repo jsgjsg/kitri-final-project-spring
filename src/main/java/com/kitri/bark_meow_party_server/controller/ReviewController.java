@@ -1,8 +1,10 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.Review;
+import com.kitri.bark_meow_party_server.dto.ReviewDetailDTO;
 import com.kitri.bark_meow_party_server.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +28,7 @@ public class ReviewController {
 
     //후기 리스트를 가져오기 위한 컨트롤러
     @GetMapping("/reviews")
-    public List<Review> getReviews() {
+    public List<ReviewDetailDTO> getReviews() {
         //reviewService에서 작성 한 후기 조회 로직을 가져온다.
         reviewService.findAll();
         return reviewService.findAll();
@@ -67,18 +69,16 @@ public class ReviewController {
         return reviewService.findByCategory(category);
     }
 //    @GetMapping("/reviews?category={category}")
-//    public String getReviews(@PathVariable String category) {
-//        return "reviews";
-//    }
 
     //검색 로직
     @GetMapping("/reviews/search")
-    public List<Review> getReviewsBySearch(@RequestParam String query) {
+    public List<ReviewDetailDTO> getReviewsBySearch(@RequestParam String query) {
         return reviewService.searchByQuery(query);
     }
 //    @GetMapping("/reviews/search?query={query}")
-//    public String getSearchReviews(@PathVariable String query, Model model) {
-//        model.addAttribute("query", query);
-//        return "search";
-//    }
+
+    @PostMapping("/reviews/{reviewId}/like")
+    public ResponseEntity<Integer> like(@PathVariable Long reviewId) {
+        return ResponseEntity.ok(reviewService.likeReview(reviewId));
+    }
 }

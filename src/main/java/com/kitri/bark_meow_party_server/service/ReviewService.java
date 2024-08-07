@@ -2,6 +2,8 @@ package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.ReviewDetailDTO;
+import com.kitri.bark_meow_party_server.dto.ReviewWithUserDTO;
 import com.kitri.bark_meow_party_server.mapper.CategoryMapper;
 import com.kitri.bark_meow_party_server.mapper.ReviewMapper;
 import com.kitri.bark_meow_party_server.mapper.SearchMapper;
@@ -10,7 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,9 +28,28 @@ public class ReviewService {
     @Autowired
     SearchMapper searchMapper;
 
+    @Transactional
     //DB 후기 테이블 전체 조회
-    public List<Review> findAll() {
-        return reviewMapper.selectAll();
+    public List<ReviewDetailDTO> findAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userService.findByUsername(username);
+        List<ReviewWithUserDTO> reviews = reviewMapper.selectAll();
+        List<ReviewDetailDTO> reviewDetailDTOS = new ArrayList<>();
+
+        for (ReviewWithUserDTO review : reviews) {
+            ReviewDetailDTO reviewDetailDTO = new ReviewDetailDTO();
+            reviewDetailDTO.setReviewWithUser(review);
+
+            reviewDetailDTO.setLikeCount(reviewMapper.countLikeReview(review.getId()));
+
+            boolean isLiked = reviewMapper.likeReview(user.getId(), review.getId());
+            reviewDetailDTO.setLiked(isLiked);
+
+            reviewDetailDTOS.add(reviewDetailDTO);
+        }
+        return reviewDetailDTOS;
     }
 
     public Review findById(Long id) {
@@ -76,9 +99,40 @@ public class ReviewService {
     public List<Review> findByCategory(String category) {
         return categoryMapper.selectByCategory(category);
     }
-
     //검색
-    public List<Review> searchByQuery(String query) {
-        return searchMapper.searchByQuery(query);
+    public List<ReviewDetailDTO> searchByQuery(String query){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
+
+        List<ReviewWithUserDTO> feeds = searchMapper.searchByQuery(query);
+        List<ReviewDetailDTO> reviewDetailDTOS = new ArrayList<>();
+
+        for (ReviewWithUserDTO review : feeds) {
+            ReviewDetailDTO reviewDetailDTO = new ReviewDetailDTO();
+            reviewDetailDTO.setReviewWithUser(review);
+            reviewDetailDTO.setLikeCount(reviewMapper.countLikeReview(review.getId()));
+
+            boolean isLiked = reviewMapper.likeReview(user.getId(), review.getId());
+            reviewDetailDTO.setLiked(isLiked);
+
+            reviewDetailDTOS.add(reviewDetailDTO);
+        }
+        return reviewDetailDTOS;
+    }
+
+    @Transactional
+    public int likeReview(Long reviewId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
+        Long userId = user.getId();
+
+        if(reviewMapper.likeReview(userId, reviewId)){
+            reviewMapper.unlike(userId, reviewId);
+        } else {
+            reviewMapper.like(userId, reviewId);
+        }
+        return reviewMapper.countLikeReview(reviewId);
     }
 }
