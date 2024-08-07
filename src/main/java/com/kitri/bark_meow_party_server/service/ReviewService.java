@@ -100,6 +100,20 @@ public class ReviewService {
         return categoryMapper.selectByCategory(category);
     }
     //검색
+//        List<FeedDetailDTO> feedDetailDTOs = new ArrayList<>();
+//        for (FeedWithUserDTO feed : feeds) {
+//            FeedDetailDTO feedDetailDTO = new FeedDetailDTO();
+//            feedDetailDTO.setFeedWithUser(feed);
+//            feedDetailDTO.setLikeCount(feedMapper.getLikeCount(feed.getId()));
+//
+//            boolean isLiked = feedMapper.existsByUserIdAndFeedId(user.getId(), feed.getId());
+//            feedDetailDTO.setLiked(isLiked);
+//
+//            feedDetailDTOs.add(feedDetailDTO);
+//        }
+//
+//        return feedDetailDTOs;
+//    }
     public List<ReviewDetailDTO> searchByQuery(String query, String animal, String category){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
