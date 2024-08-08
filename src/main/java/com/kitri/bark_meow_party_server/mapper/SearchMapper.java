@@ -38,10 +38,10 @@ public interface SearchMapper {
             "JOIN user u " +
             "ON r.user_id = u.id " +
             "WHERE " +
-            "item LIKE CONCAT('%', #{query}, '%') OR " +
+            "(item LIKE CONCAT('%', #{query}, '%') OR " +
             "good LIKE CONCAT('%', #{query}, '%') OR " +
             "bad LIKE CONCAT('%', #{query}, '%') OR " +
-            "tip LIKE CONCAT('%', #{query}, '%')" +
+            "tip LIKE CONCAT('%', #{query}, '%'))" +
             "AND animal = #{animal} " +
             "AND category = #{category}")
     List<ReviewWithUserDTO> searchByReviewQueryAndAnimalCategory(String query, String animal, String category);
