@@ -1,9 +1,7 @@
-package com.kitri.bark_meow_party_server.test;
+package com.kitri.bark_meow_party_server.test.qa;
 
-import com.kitri.bark_meow_party_server.controller.FeedCommentController;
-import com.kitri.bark_meow_party_server.domain.FeedComment;
-import com.kitri.bark_meow_party_server.dto.FeedCommentWithUserDTO;
-import com.kitri.bark_meow_party_server.service.FeedCommentService;
+import com.kitri.bark_meow_party_server.controller.QuestionController;
+import com.kitri.bark_meow_party_server.domain.Question;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,76 +12,71 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 import java.util.Collections;
 import java.util.List;
 
 @SpringBootTest
 @Transactional
-public class FeedCommentTest {
+public class QuestionTest {
     @Autowired
-    private FeedCommentController feedCommentController;
-    @Autowired
-    FeedCommentService feedCommentService;
-
+    QuestionController questionController;
     @Test
-    void findByFeedId() throws Exception{
+    public void test() {
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 "test", "test", Collections.emptyList());
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, "test", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        FeedComment feedComment = new FeedComment();
-        feedComment.setContent("This is a test");
-        Long feedId = 69L;
-        feedCommentController.addFeedComment(feedId, feedComment);
-        List<FeedCommentWithUserDTO> feedComments = feedCommentController.getFeedComments(feedId);
-        assertThat(feedComments).isNotNull();
+        Question question = new Question();
+        question.setQuestion("This is a question");
+        Long qaId = 25L;
+        questionController.createQuestion(qaId, question);
+        List<Question> questions = questionController.getAllQuestions(qaId);
+        assertThat(questions).isNotNull();
     }
     @Test
-    void createFeedComment() throws Exception{
+    public void createQuestion() {
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 "test", "test", Collections.emptyList());
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, "test", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        FeedComment feedComment = new FeedComment();
-        feedComment.setContent("This is a test");
-        Long feedId = 69L;
-        feedCommentController.addFeedComment(feedId, feedComment);
-        assertThat(feedCommentController.addFeedComment(feedId, feedComment)).isNotNull();
+        Question question = new Question();
+        question.setQuestion("This is a question");
+        Long qaId = 25L;
+        questionController.createQuestion(qaId, question);
+        assertThat(questionController.createQuestion(qaId, question)).isNotNull();
     }
     @Test
-    void updateFeedComment() throws Exception{
+    void updateQuestion() {
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 "test", "test", Collections.emptyList());
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, "test", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        FeedComment feedComment = new FeedComment();
-        feedComment.setContent("This is a test");
-        Long feedId = 69L;
-        Long feedCommentId = 1L;
-        feedCommentController.addFeedComment(feedId, feedComment);
-        feedComment.setContent("This is a test");
-        feedCommentController.updateFeedComment(feedComment, feedId, feedCommentId);
-        List<FeedCommentWithUserDTO> feedComments = feedCommentController.getFeedComments(feedId);
-        assertThat(feedComments).isNotNull();
+        Question question = new Question();
+        question.setQuestion("This is a question");
+        Long qaId = 25L;
+        Long questionId = 23L;
+        questionController.createQuestion(qaId, question);
+        question.setQuestion("This is a new question");
+        questionController.updateQuestion(qaId, questionId, question);
+        List<Question> questions = questionController.getAllQuestions(qaId);
+        assertThat(questions).isNotNull();
     }
     @Test
-    void deleteFeedComment() throws Exception{
+    void deleteQuestion() {
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 "test", "test", Collections.emptyList());
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, "test", Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        FeedComment feedComment = new FeedComment();
-        feedComment.setContent("This is a test");
-        Long feedId = 69L;
-        feedCommentController.addFeedComment(feedId, feedComment);
-        Long commentId = 1L;
-        feedCommentController.deleteFeedComment(feedId, commentId);
+        Question question = new Question();
+        question.setQuestion("This is a question");
+        Long qaId = 25L;
+        questionController.createQuestion(qaId, question);
+        questionController.deleteQuestion(qaId, question.getId());
+        List<Question> questions = questionController.getAllQuestions(qaId);
+        assertThat(questions).isNotNull();
     }
 }

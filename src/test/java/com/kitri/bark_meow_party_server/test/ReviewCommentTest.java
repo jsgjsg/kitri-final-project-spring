@@ -35,7 +35,7 @@ public class ReviewCommentTest {
 
         ReviewComment reviewComment = new ReviewComment();
         reviewComment.setContent("This is a test");
-        Long reviewId = 2L;
+        Long reviewId = 34L;
         reviewCommentController.addReviewComment(reviewId, reviewComment);
         List<ReviewCommentWithUserDTO> reviewComments = reviewCommentController.getReviewComments(reviewId);
         assertThat(reviewComments).isNotNull();
@@ -50,7 +50,7 @@ public class ReviewCommentTest {
 
         ReviewComment reviewComment = new ReviewComment();
         reviewComment.setContent("This is a test");
-        Long reviewId = 2L;
+        Long reviewId = 34L;
         reviewCommentController.addReviewComment(reviewId, reviewComment);
         assertThat(reviewCommentController.addReviewComment(reviewId, reviewComment)).isNotNull();
     }
@@ -63,11 +63,13 @@ public class ReviewCommentTest {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         ReviewComment reviewComment = new ReviewComment();
         reviewComment.setContent("This is a test");
-        Long reviewId = 2L;
+        Long reviewId = 34L;
+        Long commentId = 1L;
         reviewCommentController.addReviewComment(reviewId, reviewComment);
         reviewComment.setContent("This is another test");
+        reviewCommentController.updateReviewComment(reviewComment, reviewId, commentId);
         List<ReviewCommentWithUserDTO> reviewComments = reviewCommentController.getReviewComments(reviewId);
-        assertThat(reviewCommentController.addReviewComment(reviewId, reviewComment)).isNotNull();
+        assertThat(reviewComments).isNotNull();
     }
     @Test
     void deleteReviewComment() throws Exception {
@@ -78,7 +80,7 @@ public class ReviewCommentTest {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         ReviewComment reviewComment = new ReviewComment();
         reviewComment.setContent("This is a test");
-        Long reviewId = 2L;
+        Long reviewId = 34L;
         reviewCommentController.addReviewComment(reviewId, reviewComment);
         Long commentId = 29L;
         reviewCommentController.deleteReviewComment(reviewId, commentId);
