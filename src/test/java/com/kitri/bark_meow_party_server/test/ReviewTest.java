@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 @SpringBootTest
+@Transactional
 public class ReviewTest {
     @InjectMocks
     private ReviewService reviewService; // 실제 ReviewService 객체를 생성하여 주입합니다.
