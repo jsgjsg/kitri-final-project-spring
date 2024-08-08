@@ -3,7 +3,10 @@
 //import com.kitri.bark_meow_party_server.controller.FeedController;
 //import com.kitri.bark_meow_party_server.controller.UserController;
 //import com.kitri.bark_meow_party_server.domain.Feed;
+//import com.kitri.bark_meow_party_server.domain.FeedHashtag;
 //import com.kitri.bark_meow_party_server.dto.FeedDetailDTO;
+//import com.kitri.bark_meow_party_server.mapper.FeedHashtagMapper;
+//import com.kitri.bark_meow_party_server.service.FeedService;
 //import com.kitri.bark_meow_party_server.service.UserService;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,10 @@
 //
 //    @Autowired
 //    private FeedController feedController;
+//    @Autowired
+//    private FeedService feedService;
+//    @Autowired
+//    FeedHashtagMapper feedHashtagMapper;
 //
 //    @Test
 //    void findAll() throws Exception {
