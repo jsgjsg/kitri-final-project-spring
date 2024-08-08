@@ -76,4 +76,14 @@ public class UserController {
 
         return ResponseEntity.ok("Logged out successfully");
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser() {
+        try {
+            userService.deleteUser();
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseDTO("Error deleting user"));
+        }
+    }
 }
