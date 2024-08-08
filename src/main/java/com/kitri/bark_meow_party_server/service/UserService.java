@@ -3,6 +3,9 @@ package com.kitri.bark_meow_party_server.service;
 import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,4 +50,11 @@ public class UserService {
         return allUsernames.contains(nickname);
     }
 
+    public void deleteUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((UserDetails) auth.getPrincipal()).getUsername();
+        User user = findByUsername(username);
+
+        userMapper.deleteById(user.getId());
+    }
 }

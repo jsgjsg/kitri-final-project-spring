@@ -1,10 +1,7 @@
 package com.kitri.bark_meow_party_server.mapper;
 
 import com.kitri.bark_meow_party_server.domain.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -25,4 +22,7 @@ public interface UserMapper {
 
     @Select("SELECT nickname FROM user")
     List<String> findAllNicknames();
+
+    @Delete("DELETE FROM user WHERE id = #{id}")
+    void deleteById(Long id);
 }
