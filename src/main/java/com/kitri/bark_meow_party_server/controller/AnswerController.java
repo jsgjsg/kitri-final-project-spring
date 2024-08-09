@@ -24,8 +24,8 @@ public class AnswerController {
         return answerService.getByQaId(qaId);
     }
     @GetMapping("/{qaId}/answers/{userId}")
-    public List<Answer> getAnswer(@PathVariable Long qaId, @PathVariable Long doctorId) {
-        return answerService.getAnswerByDoctorId(doctorId);
+    public List<Answer> getAnswer(@PathVariable Long qaId, @PathVariable Long userId) {
+        return answerService.getAnswerByDoctorId(userId);
     }
     @PutMapping("/{qaId}/answers/{answerId}")
     public void updateAnswer(@PathVariable Long qaId, @PathVariable Long answerId, @RequestBody Answer answer) {
