@@ -17,7 +17,8 @@ public class DoctorService {
     DoctorMapper doctorMapper;
 
     public User findByDoctorname(String username) {
-        return doctorMapper.findByDoctorname(username);
+        User user = doctorMapper.findByDoctorname(username);
+        return user;
     }
 
     public void signup(User user) {
