@@ -11,11 +11,11 @@ public interface AnswerMapper {
     List<Answer> getAll();
     @Select("SELECT * FROM answer WHERE id=#{id}")
     Answer getById(Long id);
-    @Select("SELECT * FROM answer WHERE doctor_id=#{doctorId}")
+    @Select("SELECT * FROM answer WHERE user_id=#{userId}")
     List<Answer> getByDoctorId(Long doctorId);
     @Select("SELECT * FROM answer WHERE qa_id=#{qaId}")
     List<Answer> getByQaId(Long qaId);
-    @Insert("INSERT INTO answer (doctor_id, qa_id, answer) VALUES (#{doctorId}, #{qaId}, #{answer})")
+    @Insert("INSERT INTO answer (user_id, qa_id, answer) VALUES (#{userId}, #{qaId}, #{answer})")
     void createAnswer(Answer answer);
     @Update("UPDATE answer SET answer = #{answer} WHERE id=#{id}")
     void updateAnswer(Answer answer);

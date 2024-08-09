@@ -34,10 +34,10 @@ public class AnswerService {
     }
     public Answer addAnswer(Answer answer) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String doctorName = authentication.getName();
+        String userName = authentication.getName();
 
-        User doctor = doctorService.findByDoctorname(doctorName);
-        answer.setDoctorId(doctor.getId());
+        User user = doctorService.findByDoctorname(userName);
+        answer.setUserId(user.getId());
         //user로 테스트 시 밑 주석 해제하고, 윗부분 String doctorName부터 주석처리
 //        String username = authentication.getName();
 //        User user = userService.findByUsername(username);
