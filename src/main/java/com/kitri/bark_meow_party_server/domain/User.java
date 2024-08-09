@@ -15,6 +15,7 @@ public class User {
     private String username;
     private String password;
     private String location;
+    private String hospital;
     private String introduce;
     private String image;
     private Boolean enabled;
