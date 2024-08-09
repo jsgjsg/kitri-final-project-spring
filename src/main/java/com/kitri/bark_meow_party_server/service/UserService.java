@@ -38,6 +38,10 @@ public class UserService {
         return userMapper.findByUsername(username);
     }
 
+    public User findByNickname(String nickname) {
+        return userMapper.findByNickname(nickname);
+    }
+
     public boolean checkUsername(String username) {
         List<String> allUsernames = userMapper.findAllUsernames();
 
