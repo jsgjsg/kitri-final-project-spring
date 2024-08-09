@@ -31,6 +31,7 @@ public class SecurityConfig {
     }
 
     private final CustomExceptionHandler customExceptionHandler;
+
     public SecurityConfig(CustomExceptionHandler customExceptionHandler) {
         this.customExceptionHandler = customExceptionHandler;
     }
@@ -50,6 +51,7 @@ public class SecurityConfig {
 
         return userDetailsManager;
     }
+
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
@@ -83,8 +85,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/qa/{qaId}/answers/**").hasRole("DOCTOR")
                                 .requestMatchers("/api/auth/login").permitAll()
+                                .requestMatchers("/api/doctor/login").permitAll()
                                 .requestMatchers("/api/auth/signup").permitAll()
+                                .requestMatchers("api/doctor/signup").permitAll()
                                 .requestMatchers("/api/auth/check-username").permitAll()
                                 .requestMatchers("/api/auth/check-nickname").permitAll()
 //                                .requestMatchers("/**").permitAll()  // 인증이 필요 없는 엔드포인트
