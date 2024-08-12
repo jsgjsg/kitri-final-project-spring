@@ -85,7 +85,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/api/qa/{qaId}/answers/**").hasRole("DOCTOR")
+                                .requestMatchers("/api/qa/{qaId}/answers/create").hasRole("DOCTOR")
+                                .requestMatchers("/api/qa/{qaId}/answers/{answerId}/update").hasRole("DOCTOR")
+                                .requestMatchers("/api/qa/{qaId}/answers/{answerId}/delete").hasRole("DOCTOR")
                                 .requestMatchers("/api/auth/login").permitAll()
                                 .requestMatchers("/api/doctor/login").permitAll()
                                 .requestMatchers("/api/auth/signup").permitAll()

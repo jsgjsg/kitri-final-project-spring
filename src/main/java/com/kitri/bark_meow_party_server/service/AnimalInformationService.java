@@ -23,6 +23,7 @@ public class AnimalInformationService {
         String username = ((UserDetails) auth.getPrincipal()).getUsername();
 
         User user = userService.findByUsername(username);
+        animalInformation.setUserId(user.getId());
 
         animalInformationMapper.insertAnimal(animalInformation);
     }
@@ -41,6 +42,7 @@ public class AnimalInformationService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) auth.getPrincipal()).getUsername();
         User user = userService.findByUsername(username);
+        animalInformation.setUserId(user.getId());
 
         animalInformationMapper.updateAnimalInformation(animalInformation);
     }
