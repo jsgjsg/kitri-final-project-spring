@@ -1,6 +1,7 @@
 package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.Feed;
+import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.dto.FeedDetailDTO;
 import com.kitri.bark_meow_party_server.dto.FeedWithUserDTO;
@@ -43,6 +44,15 @@ public class FeedService {
 
     public List<Feed> getFeedsByUserId(Long userId) {
         return feedMapper.findByUserId(userId);
+    }
+
+    //페이징
+    public List<Feed> getFeeds(int page, int size) {
+        int offset = (page - 1) * size;
+        return feedMapper.findByOffsetAndLimit(offset, size);
+    }
+    public int getFeedsCount() {
+        return feedMapper.count();
     }
 
     public void saveFeed(FeedDetailDTO feedDetailDTO) {

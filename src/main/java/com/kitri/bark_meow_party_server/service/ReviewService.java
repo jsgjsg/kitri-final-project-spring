@@ -52,6 +52,15 @@ public class ReviewService {
         return reviewDetailDTOS;
     }
 
+    //페이징
+    public List<Review> getReviews(int page, int size) {
+        int offset = (page - 1) * size;
+        return reviewMapper.selectByOffsetAndLimit(offset, size);
+    }
+    public int getReviewsCount() {
+        return reviewMapper.count();
+    }
+
     public Review findById(Long id) {
         return reviewMapper.selectById(id);
     }

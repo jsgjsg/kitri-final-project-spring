@@ -20,6 +20,12 @@ public interface FeedMapper {
     @Select("SELECT * FROM feed WHERE user_id=#{userId}")
     List<Feed> findByUserId(Long userId);
 
+    //페이징
+    @Select("SELECT * FROM feed LIMIT #{offset}, #{limit}")
+    List<Feed> findByOffsetAndLimit(@Param("offset") int offset, @Param("limit") int limit);
+    @Select("SELECT COUNT(*) FROM feed")
+    int count();
+
     // 피드 삽입
     @Insert("INSERT INTO feed(user_id, image, content, animal) VALUES (#{userId}, #{image}, #{content}, #{animal})")
     @Options(useGeneratedKeys=true, keyProperty="id")
