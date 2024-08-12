@@ -16,11 +16,11 @@ public interface ReviewMapper {
     List<ReviewWithUserDTO> selectAll();
 
     //주어진 ID에 해당하는 후기조회
-    @Select("SELECT * FROM review WHERE id = #{id}")
+    @Select("SELECT * FROM review ORDER BY created_at DESC WHERE id = #{id}")
     Review selectById(Long id);
 
     //주어진 유저의 후기 조회
-    @Select("SELECT * FROM review WHERE user_id=#{userId}")
+    @Select("SELECT * FROM review ORDER BY created_at DESC WHERE user_id=#{userId}")
     List<Review> selectByUserId(Long userId);
 
     //페이징 및 최신순
