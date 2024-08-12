@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface DoctorMapper {
     @Select("SELECT * FROM user WHERE username = #{username}")
-    User findByDoctorname(String doctorname);
+    User findByDoctorname(String username);
 
     @Insert("INSERT INTO user (nickname, username, password, image, hospital) VALUES (#{nickname}, #{username}, #{password}, #{image}, #{hospital})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

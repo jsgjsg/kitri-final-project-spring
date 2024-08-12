@@ -23,7 +23,6 @@ public class DoctorService {
         User user = doctorMapper.findByDoctorname(username);
         return user;
     }
-
     public void signup(User user) {
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -46,7 +45,11 @@ public class DoctorService {
         List<String> allDoctorname = doctorMapper.getAllNickname();
         return allDoctorname.contains(nickname);
     }
-    public void deleteUser(Long id) {
-        doctorMapper.deleteById(id);
+    public void deleteUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((UserDetails) auth.getPrincipal()).getUsername();
+        User user = findByDoctorname(username);
+
+        doctorMapper.deleteById(user.getId());
     }
 }
