@@ -3,6 +3,7 @@ package com.kitri.bark_meow_party_server.service;
 import com.kitri.bark_meow_party_server.domain.QA;
 import com.kitri.bark_meow_party_server.domain.Question;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.QAWithUserDTO;
 import com.kitri.bark_meow_party_server.dto.QaQuestionDTO;
 import com.kitri.bark_meow_party_server.mapper.QAMapper;
 import com.kitri.bark_meow_party_server.mapper.QuestionMapper;
@@ -28,7 +29,7 @@ public class QAService {
     @Autowired
     SearchMapper searchMapper;
 
-    public List<QA> getQA() {
+    public List<QAWithUserDTO> getQA() {
         return qaMapper.selectAll();
     }
     public QA getQAById(Long id) {
