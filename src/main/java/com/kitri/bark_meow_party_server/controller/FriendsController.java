@@ -74,9 +74,25 @@ public class FriendsController {
         }
     }
 
-//    @PostMapping("/requests/received/{requestId}/accept") // 받은 요청 수락
-//    public ResponseEntity<?> acceptFriend(@PathVariable long requestId) {
-//
-//    }
+    @PostMapping("/requests/received/{requestId}/accept") // 받은 요청 수락
+    public ResponseEntity<?> acceptFriend(@PathVariable long requestId) {
+        try {
+            friendsService.acceptFriend(requestId);
+            return ResponseEntity.ok("accept request accepted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/requests/received/{requestId}/reject") // 받은 요청 거절
+    public ResponseEntity<?> rejectFriend(@PathVariable long requestId) {
+        try {
+            friendsService.rejectFriend(requestId);
+            return ResponseEntity.ok("reject request accepted");
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }
