@@ -91,7 +91,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/auth/login").permitAll()
                                 .requestMatchers("/api/doctor/login").permitAll()
                                 .requestMatchers("/api/auth/signup").permitAll()
-                                .requestMatchers("api/doctor/signup").permitAll()
+                                .requestMatchers("/api/doctor/signup").permitAll()
                                 .requestMatchers("/api/auth/check-username").permitAll()
                                 .requestMatchers("/api/auth/check-nickname").permitAll()
 //                                .requestMatchers("/**").permitAll()  // 인증이 필요 없는 엔드포인트
