@@ -1,13 +1,16 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.Feed;
+import com.kitri.bark_meow_party_server.domain.Review;
 import com.kitri.bark_meow_party_server.dto.FeedDetailDTO;
 import com.kitri.bark_meow_party_server.service.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/feeds")
@@ -29,6 +32,21 @@ public class FeedController {
     @GetMapping("/user/{userId}")
     public List<Feed> getByUserId(@PathVariable Long userId) {
         return feedService.getFeedsByUserId(userId);
+    }
+
+    //페이징
+    @GetMapping("/page")
+    public Map<String, Object> getFeedsPage(
+            @RequestParam (value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        List<Feed> feeds = feedService.getFeeds(page, size);
+        int total = feedService.getFeedsCount();
+        Map<String, Object> result = new HashMap<>();
+        result.put("feeds", feeds);
+        result.put("total", total);
+        result.put("page", page);
+        result.put("size", size);
+        return result;
     }
 
     // 특정 ID의 피드를 저장

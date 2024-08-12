@@ -22,6 +22,12 @@ public interface ReviewMapper {
     @Select("SELECT * FROM review WHERE user_id=#{userId}")
     List<Review> selectByUserId(Long userId);
 
+    //페이징
+    @Select("SELECT * FROM review LIMIT #{offset}, #{limit}")
+    List<Review> selectByOffsetAndLimit(@Param("offset") int offset, @Param("limit") int limit);
+    @Select("SELECT COUNT(*) FROM review")
+    int count();
+
     //새 후기를 추가
     @Insert("INSERT INTO Review(user_id, item, good, bad, tip, image, repurchase, satisfaction, animal, category ) VALUES (#{userId}, #{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction}, #{animal}, #{category})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

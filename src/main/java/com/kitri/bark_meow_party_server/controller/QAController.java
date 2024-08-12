@@ -1,6 +1,7 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.QA;
+import com.kitri.bark_meow_party_server.dto.QAWithUserDTO;
 import com.kitri.bark_meow_party_server.dto.QaQuestionDTO;
 import com.kitri.bark_meow_party_server.service.QAService;
 import com.kitri.bark_meow_party_server.service.QuestionService;
@@ -18,7 +19,7 @@ public class QAController {
     private QuestionService questionService;
 
     @GetMapping("/qa")
-    public List<QA> getQA() {
+    public List<QAWithUserDTO> getQA() {
         return qaService.getQA();
     }
 

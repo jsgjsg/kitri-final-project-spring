@@ -3,6 +3,9 @@ package com.kitri.bark_meow_party_server.service;
 import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.mapper.DoctorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +45,8 @@ public class DoctorService {
     public boolean checkNickname(String nickname) {
         List<String> allDoctorname = doctorMapper.getAllNickname();
         return allDoctorname.contains(nickname);
+    }
+    public void deleteUser(Long id) {
+        doctorMapper.deleteById(id);
     }
 }

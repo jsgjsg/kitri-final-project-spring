@@ -1,14 +1,17 @@
 package com.kitri.bark_meow_party_server.mapper;
 
 import com.kitri.bark_meow_party_server.domain.QA;
+import com.kitri.bark_meow_party_server.dto.QAWithUserDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface QAMapper {
-    @Select("SELECT * FROM qa")
-    List<QA> selectAll();
+    @Select("SELECT * FROM qa q " +
+            "JOIN user u " +
+            "ON q.user_id = u.id")
+    List<QAWithUserDTO> selectAll();
     @Select("SELECT * FROM qa WHERE title = #{title}")
     QA selectByTitle(String title);
     @Select("SELECT * FROM qa WHERE user_id=#{userId}")

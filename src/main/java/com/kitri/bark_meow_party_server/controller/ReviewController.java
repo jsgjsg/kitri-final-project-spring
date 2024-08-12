@@ -10,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController //RESTApi 웹 서비스를 만들 때 사용하는 컨트롤러
 @RequestMapping("/api")
@@ -38,6 +40,21 @@ public class ReviewController {
     public List<Review> getReview(@PathVariable Long userId) {
         reviewService.findByUserId(userId);
         return reviewService.findByUserId(userId);
+    }
+
+    //페이징
+    @GetMapping("/reviews/page")
+    public Map<String, Object> getReviewsPage(
+            @RequestParam (value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        List<Review> reviews = reviewService.getReviews(page, size);
+        int total = reviewService.getReviewsCount();
+        Map<String, Object> result = new HashMap<>();
+        result.put("reviews", reviews);
+        result.put("total", total);
+        result.put("page", page);
+        result.put("size", size);
+        return result;
     }
 
     //후기를 수정하기 위한 컨트롤러
