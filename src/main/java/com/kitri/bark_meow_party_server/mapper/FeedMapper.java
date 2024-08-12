@@ -10,7 +10,8 @@ public interface FeedMapper {
     @Select("SELECT * " +
             "FROM feed f " +
             "JOIN user u " +
-            "ON f.user_id = u.id ")
+            "ON f.user_id = u.id " +
+            "ORDER BY created_at DESC")
     List<FeedWithUserDTO> findAll();
 
     // 피드 한 개씩 보기
@@ -21,7 +22,7 @@ public interface FeedMapper {
     List<Feed> findByUserId(Long userId);
 
     //페이징
-    @Select("SELECT * FROM feed LIMIT #{offset}, #{limit}")
+    @Select("SELECT * FROM feed ORDER BY created_at DESC LIMIT #{offset}, #{limit}")
     List<Feed> findByOffsetAndLimit(@Param("offset") int offset, @Param("limit") int limit);
     @Select("SELECT COUNT(*) FROM feed")
     int count();

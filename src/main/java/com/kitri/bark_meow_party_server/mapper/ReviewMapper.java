@@ -11,7 +11,8 @@ public interface ReviewMapper {
     //모든 후기를 조회
     @Select("SELECT * FROM review r " +
             "JOIN user u " +
-            "ON r.user_id = u.id ")
+            "ON r.user_id = u.id " +
+            "ORDER BY created_at DESC")
     List<ReviewWithUserDTO> selectAll();
 
     //주어진 ID에 해당하는 후기조회
@@ -22,14 +23,14 @@ public interface ReviewMapper {
     @Select("SELECT * FROM review WHERE user_id=#{userId}")
     List<Review> selectByUserId(Long userId);
 
-    //페이징
-    @Select("SELECT * FROM review LIMIT #{offset}, #{limit}")
+    //페이징 및 최신순
+    @Select("SELECT * FROM review ORDER BY created_at DESC LIMIT #{offset}, #{limit}")
     List<Review> selectByOffsetAndLimit(@Param("offset") int offset, @Param("limit") int limit);
     @Select("SELECT COUNT(*) FROM review")
     int count();
 
     //새 후기를 추가
-    @Insert("INSERT INTO Review(user_id, item, good, bad, tip, image, repurchase, satisfaction, animal, category ) VALUES (#{userId}, #{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction}, #{animal}, #{category})")
+    @Insert("INSERT INTO Review(user_id, item, good, bad, tip, image, repurchase, satisfaction, animal, category, created_at) VALUES (#{userId}, #{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction}, #{animal}, #{category}, NOW())")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Review review);
 
