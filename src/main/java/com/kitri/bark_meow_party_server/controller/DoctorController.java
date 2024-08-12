@@ -68,12 +68,14 @@ public class DoctorController {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok("Logged out successfully");
     }
-//    @PostMapping("/logout")
-//    public ResponseEntity<?> logout() throws Exception {
-//        // SecurityContextHolder에서 인증 정보 제거
-//        SecurityContextHolder.clearContext();
-//
-//        return ResponseEntity.ok("Logged out successfully");
-//    }
-//}
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteDoctor(Long id) {
+        try {
+            doctorService.deleteUser(id);
+            return ResponseEntity.ok("Deleted");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO("Delete failed"));
+        }
+    }
+
 }
