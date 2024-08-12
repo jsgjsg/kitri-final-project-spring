@@ -68,13 +68,14 @@ public class DoctorController {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok("Logged out successfully");
     }
+
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteDoctor(Long id) {
+    public ResponseEntity<?> deleteDoctor() {
         try {
-            doctorService.deleteUser(id);
-            return ResponseEntity.ok("Deleted");
+            doctorService.deleteUser();
+            return ResponseEntity.ok("User deleted successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponseDTO("Delete failed"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponseDTO("Error deleting user"));
         }
     }
 
