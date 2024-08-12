@@ -53,4 +53,12 @@ public interface FriendsMapper {
     @Insert("INSERT INTO friend (user1_id, user2_id) VALUES (#{user1Id}, #{user2Id})")
     void makeFriend(Long user1Id, Long user2Id);
 
+    // 친구 관계 검색
+    @Select("SELECT COUNT(*) > 0 FROM friend WHERE user1_id = #{user1Id} AND user2_id = #{user2Id}")
+    boolean existsFriendship(long user1Id, long user2Id);
+
+    // 친구 관계 검색
+    @Select("SELECT COUNT(*) > 0 FROM friend_request WHERE requester_id = #{requesterId} AND receiver_id = #{receiverId}")
+    boolean existsRequest(long requesterId, long receiverId);
+
 }

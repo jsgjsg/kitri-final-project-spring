@@ -16,6 +16,7 @@ public class ProfileResponseDTO {
     private String location;
     private String introduce;
     private String image;
+    private String relationship;
 
     // User 객체를 받아서 ProfileResponseDTO로 변환하는 생성자
     public ProfileResponseDTO(User user) {
