@@ -2,6 +2,7 @@ package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.Question;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.QuestionWithUserDTO;
 import com.kitri.bark_meow_party_server.mapper.QAMapper;
 import com.kitri.bark_meow_party_server.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class QuestionService {
     public Question getQuestionById(Long id) {
         return questionMapper.selectById(id);
     }
-    public List<Question> getQuestionByQaId(Long qaId) {
+    public List<QuestionWithUserDTO> getQuestionByQaId(Long qaId) {
         return questionMapper.selectByQaId(qaId);
     }
 

@@ -1,6 +1,7 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.Question;
+import com.kitri.bark_meow_party_server.dto.QuestionWithUserDTO;
 import com.kitri.bark_meow_party_server.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class QuestionController {
     }
     //질문 조회
     @GetMapping("/{qaId}/questions")
-    public List<Question> getAllQuestions(@PathVariable Long qaId) {
+    public List<QuestionWithUserDTO> getAllQuestions(@PathVariable Long qaId) {
         return questionService.getQuestionByQaId(qaId);
     }
     //유저별 질문조회
