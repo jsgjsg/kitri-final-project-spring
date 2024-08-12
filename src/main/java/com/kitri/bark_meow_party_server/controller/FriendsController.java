@@ -35,9 +35,9 @@ public class FriendsController {
     }
 
     @PostMapping("/requests") // 친구 요청 보내기
-    public ResponseEntity<?> requestFriend(@RequestBody String nickname) {
+    public ResponseEntity<?> requestFriend(@RequestBody long friendId) {
         try {
-            friendsService.requestFriend(nickname);
+            friendsService.requestFriend(friendId);
             return ResponseEntity.ok("Friend request accepted");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -91,6 +91,17 @@ public class FriendsController {
             return ResponseEntity.ok("reject request accepted");
         }
         catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/search-nickname") // 닉네임으로 검색
+    public ResponseEntity<?> searchNickname(@RequestBody String nickname) {
+        try {
+            nickname = nickname.substring(1, nickname.length() - 1);
+            ProfileResponseDTO profileResponseDTO = friendsService.searchNickname(nickname);
+            return ResponseEntity.ok(profileResponseDTO);
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

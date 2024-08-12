@@ -45,15 +45,13 @@ public class FriendsService {
     }
 
     // 친구 요청 보내기
-    public void requestFriend(String friendNickname) {
+    public void requestFriend(long friendId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         User requester = userService.findByUsername(username);
-        System.out.println(friendNickname);
-        User receiver = userService.findByNickname(friendNickname);
 
-        friendsMapper.requestFriend(requester.getId(), receiver.getId());
+        friendsMapper.requestFriend(requester.getId(), friendId);
     }
 
     // 보낸 요청 조회
@@ -101,4 +99,40 @@ public class FriendsService {
         friendsMapper.deleteRequestFriend(requestId);
     }
 
+    // 친구 검색
+    public ProfileResponseDTO searchNickname(String nickname) {
+        User user = userMapper.findByNickname(nickname);
+
+        ProfileResponseDTO profileResponseDTO;
+        if(user == null) profileResponseDTO = new ProfileResponseDTO();
+        else {
+            profileResponseDTO = new ProfileResponseDTO(user);
+            profileResponseDTO.setRelationship(searchRelationship(user));
+        }
+        return profileResponseDTO;
+    }
+
+    // 관계 검색
+    public String searchRelationship(User other) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User me = userService.findByUsername(username);
+
+        long user1Id = Math.min(me.getId(), other.getId());
+        long user2Id = Math.max(me.getId(), other.getId());
+
+        // 친구
+        boolean isFriend = friendsMapper.existsFriendship(user1Id, user2Id);
+        if(isFriend) return "Friend";
+
+        // 내가 요청함
+        boolean sent = friendsMapper.existsRequest(me.getId(), other.getId());
+        if(sent) return "Sent";
+
+        // 내가 요청받음
+        boolean received = friendsMapper.existsRequest(other.getId(), me.getId());
+        if(received) return "Received";
+
+        return "Nothing";
+    }
 }
