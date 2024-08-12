@@ -19,9 +19,15 @@ public class AnimalInformationController {
         return animalInformation;
     }
     @GetMapping("")
+    public List<AnimalInformation> getAll() {
+        return animalInformationService.getAllAnimals();
+    }
+
+    @GetMapping("/{userId}")
     public List<AnimalInformation> getUserAnimal(@PathVariable Long userId) {
         return animalInformationService.getUserAnimals(userId);
     }
+
     @PutMapping("/{animalId}/update")
     public AnimalInformation updateAnimal(@PathVariable Long animalId, @RequestBody AnimalInformation animalInformation) {
         animalInformation.setId(animalId);
