@@ -85,13 +85,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/inquiry/answer/{inquiryId}/create").hasRole("ADMIN")
+                                .requestMatchers("api/inquiry/answer/list").hasRole("ADMIN")
+                                .requestMatchers("/api/inquiry/answer/{id}/update").hasRole("ADMIN")
+                                .requestMatchers("/api/inquiry/answer/{id}/delete").hasRole("ADMIN")
                                 .requestMatchers("/api/qa/{qaId}/answers/create").hasRole("DOCTOR")
                                 .requestMatchers("/api/qa/{qaId}/answers/{answerId}/update").hasRole("DOCTOR")
                                 .requestMatchers("/api/qa/{qaId}/answers/{answerId}/delete").hasRole("DOCTOR")
                                 .requestMatchers("/api/auth/login").permitAll()
                                 .requestMatchers("/api/doctor/login").permitAll()
                                 .requestMatchers("/api/auth/signup").permitAll()
-                                .requestMatchers("api/doctor/signup").permitAll()
+                                .requestMatchers("/api/doctor/signup").permitAll()
                                 .requestMatchers("/api/auth/check-username").permitAll()
                                 .requestMatchers("/api/auth/check-nickname").permitAll()
 //                                .requestMatchers("/**").permitAll()  // 인증이 필요 없는 엔드포인트
