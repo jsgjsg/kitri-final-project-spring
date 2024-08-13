@@ -18,6 +18,9 @@ public interface InquiryMapper {
     @Select("SELECT * FROM inquiry ORDER BY created_at DESC WHERE id=#{id}")
     Inquiry getByInquiryId(Long id);
 
+    @Select("SELECT * FROM inquiry WHERE userId=#{userId}")
+    List<Inquiry> getByUserId(Long userId);
+
     //페이징 및 최신순
     @Select("SELECT * FROM inquiry ORDER BY created_at DESC LIMIT #{offset}, #{limit}")
     List<Inquiry> selectByOffsetAndLimit(@Param("offset") int offset, @Param("limit") int limit);
