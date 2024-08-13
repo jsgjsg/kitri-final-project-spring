@@ -15,10 +15,10 @@ public interface FeedMapper {
     List<FeedWithUserDTO> findAll();
 
     // 피드 한 개씩 보기
-    @Select("SELECT * From feed ORDER BY created_at DESC where id = #{id}")
+    @Select("SELECT * From feed where id = #{id} ORDER BY created_at DESC")
     Feed findById(Long id);
 
-    @Select("SELECT * FROM feed ORDER BY created_at DESC WHERE user_id=#{userId}")
+    @Select("SELECT * FROM feed WHERE user_id=#{userId} ORDER BY created_at DESC")
     List<Feed> findByUserId(Long userId);
 
     //페이징
