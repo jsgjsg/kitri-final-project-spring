@@ -30,9 +30,9 @@ public interface FriendsMapper {
     // 보낸 요청 조회
     @Select("SELECT * FROM friend_request fr " +
             "JOIN user u " +
-            "ON fr.receiver _id = u.id " +
+            "ON fr.receiver_id = u.id " +
             "WHERE requester_id=#{requesterId}")
-    List<ProfileResponseDTO> getRequestFriend(@Param("requesterId") Long requesterId);
+    List<ProfileResponseDTO> getRequestFriend(@Param("requesterId") long requesterId);
 
     // 보낸 요청 취소
     @Delete("DELETE FROM friend_request WHERE id=#{requestId}")

@@ -133,6 +133,8 @@ public class FriendsService {
         boolean received = friendsMapper.existsRequest(other.getId(), me.getId());
         if(received) return "Received";
 
+        if(me.getId() == other.getId()) return "Me";
+
         return "Nothing";
     }
 }
