@@ -15,7 +15,7 @@ public interface InquiryMapper {
             "ORDER BY created_at DESC ")
     List<InquiryWithUserDTO> getInquiryAll();
 
-    @Select("SELECT * FROM inquiry ORDER BY created_at DESC WHERE id=#{id}")
+    @Select("SELECT * FROM inquiry WHERE id=#{id} ORDER BY created_at DESC")
     Inquiry getByInquiryId(Long id);
 
     @Select("SELECT * FROM inquiry WHERE userId=#{userId}")
