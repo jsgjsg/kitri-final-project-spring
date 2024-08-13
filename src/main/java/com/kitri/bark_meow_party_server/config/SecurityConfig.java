@@ -85,10 +85,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/api/inquiry/answer/{inquiryId}/create").hasRole("MANAGER")
-                                .requestMatchers("api/inquiry/answer/list").hasRole("MANAGER")
-                                .requestMatchers("/api/inquiry/answer/{id}/update").hasRole("MANAGER")
-                                .requestMatchers("/api/inquiry/answer/{id}/delete").hasRole("MANAGER")
+                                .requestMatchers("/api/inquiry/answer/{inquiryId}/create").hasRole("ADMIN")
+                                .requestMatchers("api/inquiry/answer/list").hasRole("ADMIN")
+                                .requestMatchers("/api/inquiry/answer/{id}/update").hasRole("ADMIN")
+                                .requestMatchers("/api/inquiry/answer/{id}/delete").hasRole("ADMIN")
                                 .requestMatchers("/api/qa/{qaId}/answers/create").hasRole("DOCTOR")
                                 .requestMatchers("/api/qa/{qaId}/answers/{answerId}/update").hasRole("DOCTOR")
                                 .requestMatchers("/api/qa/{qaId}/answers/{answerId}/delete").hasRole("DOCTOR")
