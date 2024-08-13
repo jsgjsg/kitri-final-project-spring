@@ -28,6 +28,11 @@ public class InquiryController {
         return inquiryService.getInquiryById(id);
     }
 
+    @GetMapping("/my/{userId}")
+    public List<Inquiry> getMyInquiry(@PathVariable Long userId) {
+        return inquiryService.getInquiryByUserId(userId);
+    }
+
     //페이징
     @GetMapping("/page")
     public Map<String, Object> getInquiryPage(

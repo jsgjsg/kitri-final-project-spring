@@ -22,6 +22,9 @@ public class InquiryService {
     public List<InquiryWithUserDTO> getAllInquiry() {
         return inquiryMapper.getInquiryAll();
     }
+    public List<Inquiry> getInquiryByUserId(Long userId) {
+        return inquiryMapper.getByUserId(userId);
+    }
     //페이징
     public List<Inquiry> getInquiry(int page, int size) {
         int offset = (page - 1) * size;
