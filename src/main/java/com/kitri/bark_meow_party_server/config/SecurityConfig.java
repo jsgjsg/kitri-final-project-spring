@@ -52,27 +52,6 @@ public class SecurityConfig {
         return userDetailsManager;
     }
 
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails admin = User.withDefaultPasswordEncoder()
-//                .username("admin")
-//                .password("admin123")
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username("user")
-//                .password("user123")
-//                .roles("USER")
-//                .build();
-//        UserDetails test = User.withDefaultPasswordEncoder()
-//                .username("test")
-//                .password("test")
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin, user, test);
-//    }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -98,6 +77,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/doctor/signup").permitAll()
                                 .requestMatchers("/api/auth/check-username").permitAll()
                                 .requestMatchers("/api/auth/check-nickname").permitAll()
+                                .requestMatchers("/chat/**").permitAll()
 //                                .requestMatchers("/**").permitAll()  // 인증이 필요 없는 엔드포인트
                                 .anyRequest().authenticated()
                 )
