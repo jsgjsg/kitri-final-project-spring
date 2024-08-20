@@ -1,6 +1,7 @@
 package com.kitri.bark_meow_party_server.controller;
 
 import com.kitri.bark_meow_party_server.domain.Answer;
+import com.kitri.bark_meow_party_server.dto.AnswerWithUserDTO;
 import com.kitri.bark_meow_party_server.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class AnswerController {
         return answer;
     }
     @GetMapping("/{qaId}/answers")
-    public List<Answer> getByQaId(@PathVariable Long qaId) {
+    public List<AnswerWithUserDTO> getByQaId(@PathVariable Long qaId) {
         return answerService.getByQaId(qaId);
     }
     @GetMapping("/{qaId}/answers/{userId}")

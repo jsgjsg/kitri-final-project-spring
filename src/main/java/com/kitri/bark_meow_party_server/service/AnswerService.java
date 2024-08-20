@@ -2,6 +2,7 @@ package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.Answer;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.AnswerWithUserDTO;
 import com.kitri.bark_meow_party_server.mapper.AnswerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,7 +30,7 @@ public class AnswerService {
     public Answer getAnswerById(Long id) {
         return answerMapper.getById(id);
     }
-    public List<Answer> getByQaId (Long qaId) {
+    public List<AnswerWithUserDTO> getByQaId (Long qaId) {
         return answerMapper.getByQaId(qaId);
     }
     public Answer addAnswer(Answer answer) {

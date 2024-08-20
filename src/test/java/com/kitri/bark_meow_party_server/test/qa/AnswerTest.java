@@ -2,6 +2,7 @@ package com.kitri.bark_meow_party_server.test.qa;
 
 import com.kitri.bark_meow_party_server.controller.AnswerController;
 import com.kitri.bark_meow_party_server.domain.Answer;
+import com.kitri.bark_meow_party_server.dto.AnswerWithUserDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,7 @@ public class AnswerTest {
         answer.setAnswer("This is a test");
         Long qaId = 25L;
         answerController.createAnswer(qaId, answer);
-        List<Answer> answers = answerController.getByQaId(qaId);
+        List<AnswerWithUserDTO> answers = answerController.getByQaId(qaId);
         assertThat(answers).isNotNull();
     }
     @Test
@@ -61,7 +62,7 @@ public class AnswerTest {
         Long answerId = 5L;
         answerController.createAnswer(qaId, answer);
         answerController.updateAnswer(qaId, answerId, answer);
-        List<Answer> answers = answerController.getByQaId(qaId);
+        List<AnswerWithUserDTO> answers = answerController.getByQaId(qaId);
         assertThat(answers).isNotNull();
     }
     @Test
@@ -76,7 +77,7 @@ public class AnswerTest {
         Long qaId = 25L;
         answerController.createAnswer(qaId, answer);
         answerController.deleteAnswer(qaId, answer.getId());
-        List<Answer> answers = answerController.getByQaId(qaId);
+        List<AnswerWithUserDTO> answers = answerController.getByQaId(qaId);
         assertThat(answers).isNotNull();
     }
 }
