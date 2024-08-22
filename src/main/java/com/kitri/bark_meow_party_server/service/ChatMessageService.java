@@ -2,6 +2,7 @@ package com.kitri.bark_meow_party_server.service;
 
 import com.kitri.bark_meow_party_server.domain.ChatMessage;
 import com.kitri.bark_meow_party_server.domain.User;
+import com.kitri.bark_meow_party_server.dto.ChatRoomsDTO;
 import com.kitri.bark_meow_party_server.mapper.ChatMessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,18 +18,32 @@ public class ChatMessageService {
     @Autowired
     private ChatMessageMapper chatMessageMapper;
 
-    public List<ChatMessage> getMessages() {
-        return chatMessageMapper.findAll();
+    @Autowired
+    private UserService userService;
+
+    public List<ChatMessage> getMessages(String roomId) {
+        return chatMessageMapper.getMessagesByRoomId(roomId);
     }
 
-    public void insertMessage(TextMessage textMessage) {
+    public List<ChatRoomsDTO> getRooms() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setSender(username);
-        chatMessage.setMessage(String.valueOf(textMessage));
+        User user = userService.findByUsername(username);
 
-        chatMessageMapper.insertMessage(chatMessage);
+        return chatMessageMapper.getRooms(user.getId());
     }
+
+
+//    public void insertMessage(TextMessage textMessage) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//
+//        ChatMessage chatMessage = new ChatMessage();
+//        chatMessage.setSender(username);
+//        chatMessage.setMessage(String.valueOf(textMessage));
+//
+//        chatMessageMapper.insertMessage(chatMessage);
+//    }
+
 }

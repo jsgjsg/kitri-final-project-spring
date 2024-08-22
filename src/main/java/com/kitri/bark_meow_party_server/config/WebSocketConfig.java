@@ -14,7 +14,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     // WebSocket 핸들러를 특정 엔드포인트에 연결하도록 도와줌.
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatHandler(), "/chat")
+        registry.addHandler(chatHandler(), "/chat/{roomId}") // 각 방마다 고유 ID
                 .addInterceptors(new HttpSessionHandshakeInterceptor())
                 .setAllowedOrigins("*");
     }
