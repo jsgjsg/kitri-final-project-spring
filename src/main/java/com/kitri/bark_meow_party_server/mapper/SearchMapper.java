@@ -63,7 +63,8 @@ public interface SearchMapper {
             "FROM feed f " +
             "JOIN user u " +
             "ON f.user_id = u.id " +
-            "WHERE content LIKE CONCAT('%', #{query}, '%')")
+            "WHERE content LIKE CONCAT('%', #{query}, '%') " +
+            "ORDER BY f.id DESC")
     List<FeedWithUserDTO> searchByFeedQuery(String query);
 
     //주어진 쿼리를 포함하는 피드 조회 | 동물 있는 경우.
@@ -72,7 +73,8 @@ public interface SearchMapper {
             "JOIN user u " +
             "ON f.user_id = u.id " +
             "WHERE content LIKE CONCAT('%', #{query}, '%') " +
-            "AND animal = #{animal}")
+            "AND animal = #{animal} " +
+            "ORDER BY f.id DESC")
     List<FeedWithUserDTO> searchByFeedQueryAndAnimal(String query, String animal);
 
     //주어진 쿼리를 포함하는 qa 조회

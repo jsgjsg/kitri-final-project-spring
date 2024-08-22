@@ -11,7 +11,7 @@ public interface FeedMapper {
             "FROM feed f " +
             "JOIN user u " +
             "ON f.user_id = u.id " +
-            "ORDER BY created_at DESC")
+            "ORDER BY f.id DESC")
     List<FeedWithUserDTO> findAll();
 
     // 피드 한 개씩 보기

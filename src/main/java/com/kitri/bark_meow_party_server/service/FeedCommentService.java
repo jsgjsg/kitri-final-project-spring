@@ -4,6 +4,7 @@ import com.kitri.bark_meow_party_server.domain.Feed;
 import com.kitri.bark_meow_party_server.domain.FeedComment;
 import com.kitri.bark_meow_party_server.domain.User;
 import com.kitri.bark_meow_party_server.dto.FeedCommentWithUserDTO;
+import com.kitri.bark_meow_party_server.dto.ProfileResponseDTO;
 import com.kitri.bark_meow_party_server.mapper.FeedCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,17 +34,26 @@ public class FeedCommentService {
         return feedCommentMapper.selectByFeedId(feedId);
     }
     //새 피드 댓글을 데이터베이스에 추가
-    public void addFeedComment(Long feedId, FeedComment feedComment) {
+    public FeedCommentWithUserDTO addFeedComment(Long feedId, FeedComment feedComment) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) auth.getPrincipal()).getUsername();
 
         User user = userService.findByUsername(username);
 
-        feedComment.setUserId(user.getId());
-        feedComment.setFeedId(feedId);
+        FeedCommentWithUserDTO feedCommentWithUserDTO = new FeedCommentWithUserDTO();
+        feedCommentWithUserDTO.setFeedId(feedId);
+        feedCommentWithUserDTO.setUserId(user.getId());
+        feedCommentWithUserDTO.setContent(feedComment.getContent());
+        feedCommentWithUserDTO.setCreatedAt(LocalDateTime.now());
+        feedCommentWithUserDTO.setNickname(user.getNickname());
 
-        feedComment.setCreatedAt(LocalDateTime.now());
-        feedCommentMapper.feedCommentInsert(feedComment);
+//        feedComment.setUserId(user.getId());
+//        feedComment.setFeedId(feedId);
+
+//        feedComment.setCreatedAt(LocalDateTime.now());
+//        feedCommentMapper.feedCommentInsert(feedComment);
+        feedCommentMapper.feedCommentInsert(feedCommentWithUserDTO);
+        return feedCommentWithUserDTO;
     }
     //주어진 피드 댓글 객체의 정보를 수정
     public void updateFeedComment(FeedComment feedComment) {
