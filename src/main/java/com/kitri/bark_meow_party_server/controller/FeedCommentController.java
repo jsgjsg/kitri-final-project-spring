@@ -16,9 +16,8 @@ public class FeedCommentController {
     private FeedCommentService feedCommentService;
     //피드에 대한 댓글을 작성 하기 위한 컨트롤러
     @PostMapping("/feeds/{feedId}/comments")
-    public FeedComment addFeedComment(@PathVariable Long feedId, @RequestBody FeedComment feedComment) {
-        feedCommentService.addFeedComment(feedId, feedComment);
-        return feedComment;
+    public FeedCommentWithUserDTO addFeedComment(@PathVariable Long feedId, @RequestBody FeedComment feedComment) {
+        return feedCommentService.addFeedComment(feedId, feedComment);
     }
     //피드에 대한 댓글을 조회 하기 위한 컨트롤러
     @GetMapping("/feeds/{feedId}/comments")
