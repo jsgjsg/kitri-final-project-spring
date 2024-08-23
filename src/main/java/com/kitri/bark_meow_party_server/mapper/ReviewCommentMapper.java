@@ -31,7 +31,7 @@ public interface ReviewCommentMapper {
 
     //후기에 대한 댓글 추가
     @Insert("INSERT INTO review_comment(review_id, user_id, content, created_at) VALUES (#{reviewId}, #{userId}, #{content}, NOW())")
-    void reviewCommentInsert(ReviewComment comment);
+    void reviewCommentInsert(ReviewCommentWithUserDTO comment);
 
     //주어진 ID에 해당하는 후기에 대한 댓글 수정
     @Update("UPDATE review_comment SET content=#{content} WHERE id=#{id}")
