@@ -18,7 +18,8 @@ public interface SearchMapper {
             "item LIKE CONCAT('%', #{query}, '%') OR " +
             "good LIKE CONCAT('%', #{query}, '%') OR " +
             "bad LIKE CONCAT('%', #{query}, '%') OR " +
-            "tip LIKE CONCAT('%', #{query}, '%')")
+            "tip LIKE CONCAT('%', #{query}, '%') " +
+            "ORDER BY id DESC")
     List<ReviewWithUserDTO> searchByQuery(String query);
     //주어진 쿼리를 포함하는 후기 조회 | 동물 있는 경우.
     @Select("SELECT * " +
@@ -30,7 +31,8 @@ public interface SearchMapper {
             "good LIKE CONCAT('%', #{query}, '%') OR " +
             "bad LIKE CONCAT('%', #{query}, '%') OR " +
             "tip LIKE CONCAT('%', #{query}, '%'))" +
-            "AND animal = #{animal}")
+            "AND animal = #{animal} " +
+            "ORDER BY r.id DESC")
     List<ReviewWithUserDTO> searchByReviewQueryAndAnimal(String query, String animal);
     //주어진 쿼리를 포함하는 후기 조회 | 동물 | 카테고리가 있는 경우.
     @Select("SELECT * " +
@@ -43,7 +45,8 @@ public interface SearchMapper {
             "bad LIKE CONCAT('%', #{query}, '%') OR " +
             "tip LIKE CONCAT('%', #{query}, '%'))" +
             "AND animal = #{animal} " +
-            "AND category = #{category}")
+            "AND category = #{category} " +
+            "ORDER BY r.id DESC")
     List<ReviewWithUserDTO> searchByReviewQueryAndAnimalCategory(String query, String animal, String category);
     //주어진 쿼리를 포함하는 후기 조회 | 카테고리
     @Select("SELECT * " +
@@ -55,7 +58,8 @@ public interface SearchMapper {
             "good LIKE CONCAT('%', #{query}, '%') OR " +
             "bad LIKE CONCAT('%', #{query}, '%') OR " +
             "tip LIKE CONCAT('%', #{query}, '%'))" +
-            "AND category = #{category}")
+            "AND category = #{category} " +
+            "ORDER BY r.id DESC")
     List<ReviewWithUserDTO> searchByReviewQueryAndCategory(String query, String category);
 
     //주어진 쿼리를 포함하는 피드 조회

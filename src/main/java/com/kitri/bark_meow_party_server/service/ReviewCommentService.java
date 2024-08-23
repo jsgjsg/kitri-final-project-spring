@@ -37,27 +37,21 @@ public class ReviewCommentService {
     }
 
     //후기에 대한 댓글 작성
-    public void addReviewComment(Long reviewId, ReviewComment reviewComment) {
-        //로그인 한 유저로 작성자를 고정 시키기 위한 로직
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String username = ((UserDetails) principal).getUsername();
-//
-//        User user = userService.findByUsername(username);
-//        reviewComment.setId(user.getId());
-
+    public ReviewCommentWithUserDTO addReviewComment(Long reviewId, ReviewComment reviewComment) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = ((UserDetails) auth.getPrincipal()).getUsername();
 
         User user = userService.findByUsername(username);
 
-        reviewComment.setUserId(user.getId());
-        reviewComment.setReviewId(reviewId);
+        ReviewCommentWithUserDTO reviewCommentWithUserDTO = new ReviewCommentWithUserDTO();
+        reviewCommentWithUserDTO.setReviewId(reviewId);
+        reviewCommentWithUserDTO.setUserId(user.getId());
+        reviewCommentWithUserDTO.setContent(reviewComment.getContent());
+        reviewCommentWithUserDTO.setCreatedAt(LocalDateTime.now());
+        reviewCommentWithUserDTO.setNickname(user.getNickname());
 
-        //작성 시간
-        reviewComment.setCreatedAt(LocalDateTime.now());
-        //후기 댓글 추가
-        reviewCommentMapper.reviewCommentInsert(reviewComment);
-//        return reviewCommentMapper.selectById(reviewComment.getId());
+        reviewCommentMapper.reviewCommentInsert(reviewCommentWithUserDTO);
+        return reviewCommentWithUserDTO;
     }
 
     //후기에 대한 댓글 수정
