@@ -1,5 +1,6 @@
 package com.kitri.bark_meow_party_server.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kitri.bark_meow_party_server.domain.ChatMessage;
 import com.kitri.bark_meow_party_server.mapper.ChatMessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class ChatHandler extends TextWebSocketHandler {
     @Autowired
     ChatMessageMapper chatMessageMapper;
+
+    // Jackson ObjectMapper 인스턴스 생성 (JSON 파싱에 사용)
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     // 채팅방 ID와 WebSocket 세션을 매핑
     private final ConcurrentHashMap<String, Set<WebSocketSession>> roomSessions = new ConcurrentHashMap<>();
@@ -41,24 +45,21 @@ public class ChatHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String roomId = getRoomId(session);
 
-        // 메시지를 저장할 때 필요한 정보 추출
-        String payload = message.getPayload();  // 메시지 내용 (형식: "sender: message")
-        String[] splitPayload = payload.split(": ", 2);
-        String sender = splitPayload[0];
-        String content = splitPayload[1];
+        // 메시지를 JSON 형식으로 파싱
+        String payload = message.getPayload();
+        ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
 
-        // 채팅 메시지를 데이터베이스에 저장
-        ChatMessage chatMessage = new ChatMessage();
+        // 채팅 메시지에 필요한 정보 추가
         chatMessage.setRoomId(roomId);
-        chatMessage.setSender(sender);
-        chatMessage.setMessage(content);
-        chatMessage.setTimestamp(LocalDateTime.now());
+        chatMessage.setTimestamp(LocalDateTime.now()); // 타임스탬프 설정
+
+        // 데이터베이스에 메시지 저장
         chatMessageMapper.insertMessage(chatMessage);
 
         // 모든 클라이언트에게 메시지 전송
         for (WebSocketSession webSocketSession : roomSessions.get(roomId)) {
             if (webSocketSession.isOpen()) {
-                webSocketSession.sendMessage(message);
+                webSocketSession.sendMessage(new TextMessage(objectMapper.writeValueAsString(chatMessage)));
             }
         }
     }
