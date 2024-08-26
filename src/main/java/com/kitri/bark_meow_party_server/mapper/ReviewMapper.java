@@ -30,16 +30,16 @@ public interface ReviewMapper {
     int count();
 
     //새 후기를 추가
-    @Insert("INSERT INTO Review(user_id, item, good, bad, tip, image, repurchase, satisfaction, animal, category, created_at) VALUES (#{userId}, #{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction}, #{animal}, #{category}, NOW())")
+    @Insert("INSERT INTO review(user_id, item, good, bad, tip, image, repurchase, satisfaction, animal, category, created_at) VALUES (#{userId}, #{item}, #{good}, #{bad}, #{tip}, #{image}, #{repurchase}, #{satisfaction}, #{animal}, #{category}, NOW())")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Review review);
 
     //해당 후기 정보를 수정
-    @Update("UPDATE Review SET user_id=#{userId}, item=#{item}, good=#{good}, bad=#{bad}, tip=#{tip}, image=#{image}, repurchase=#{repurchase}, satisfaction=#{satisfaction}, animal=#{animal}, category=#{category} WHERE id=#{id}")
+    @Update("UPDATE review SET user_id=#{userId}, item=#{item}, good=#{good}, bad=#{bad}, tip=#{tip}, image=#{image}, repurchase=#{repurchase}, satisfaction=#{satisfaction}, animal=#{animal}, category=#{category} WHERE id=#{id}")
     void update(Review review);
 
     //해당 후기 삭제
-    @Delete("DELETE FROM Review WHERE id=#{id}")
+    @Delete("DELETE FROM review WHERE id=#{id}")
     void delete(Long id);
 
     //좋아요 눌렀는제 확인

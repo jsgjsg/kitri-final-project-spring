@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface SearchMapper {
     //주어진 쿼리를 포함하는 후기 조회
-    @Select("SELECT * FROM Review WHERE " +
+    @Select("SELECT * FROM review WHERE " +
             "item LIKE CONCAT('%', #{query}, '%') OR " +
             "good LIKE CONCAT('%', #{query}, '%') OR " +
             "bad LIKE CONCAT('%', #{query}, '%') OR " +
