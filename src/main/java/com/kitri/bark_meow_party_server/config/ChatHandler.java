@@ -45,21 +45,24 @@ public class ChatHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String roomId = getRoomId(session);
 
-        // 메시지를 JSON 형식으로 파싱
+        // 메시지를 저장할 때 필요한 정보 추출
         String payload = message.getPayload();
-        ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
+        String[] splitPayload = payload.split(": ", 2);
+        String sender = splitPayload[0];
+        String content = splitPayload[1];
 
-        // 채팅 메시지에 필요한 정보 추가
+        // 채팅 메시지를 데이터베이스에 저장
+        ChatMessage chatMessage = new ChatMessage();
         chatMessage.setRoomId(roomId);
-        chatMessage.setTimestamp(LocalDateTime.now()); // 타임스탬프 설정
-
-        // 데이터베이스에 메시지 저장
+        chatMessage.setSender(sender);
+        chatMessage.setMessage(content);
+        chatMessage.setTimestamp(LocalDateTime.now());
         chatMessageMapper.insertMessage(chatMessage);
 
         // 모든 클라이언트에게 메시지 전송
         for (WebSocketSession webSocketSession : roomSessions.get(roomId)) {
             if (webSocketSession.isOpen()) {
-                webSocketSession.sendMessage(new TextMessage(objectMapper.writeValueAsString(chatMessage)));
+                webSocketSession.sendMessage(message);
             }
         }
     }
