@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,7 +15,13 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    // 고정된 시크릿 문자열 (적절한 길이와 복잡성 유지)
+    private static final String SECRET_STRING = "your-very-secure-and-long-secret-key-here";
+
+    // 고정된 SECRET_KEY (변수명 그대로 유지)
+    private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET_STRING.getBytes(StandardCharsets.UTF_8));
+
+//    private Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); // 서버 킬 때마다 시크릿 키 변경
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
