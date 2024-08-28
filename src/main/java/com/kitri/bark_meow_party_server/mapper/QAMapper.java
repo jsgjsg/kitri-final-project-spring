@@ -10,7 +10,8 @@ import java.util.List;
 public interface QAMapper {
     @Select("SELECT * FROM qa q " +
             "JOIN user u " +
-            "ON q.user_id = u.id")
+            "ON q.user_id = u.id " +
+            "ORDER BY created_at DESC")
     List<QAWithUserDTO> selectAll();
     @Select("SELECT * FROM qa WHERE title = #{title}")
     QA selectByTitle(String title);
