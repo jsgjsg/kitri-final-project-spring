@@ -31,9 +31,9 @@ public class MyPageController {
     }
 
     @PutMapping("change-password")
-    public ResponseEntity<?> updateMyPassword(@RequestBody User user) {
+    public ResponseEntity<?> updateMyPassword(@RequestBody String password) {
         try {
-            myPageService.updateMyPassword(user);
+            myPageService.updateMyPassword(password);
             return ResponseEntity.ok("비밀번호 수정 완료");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

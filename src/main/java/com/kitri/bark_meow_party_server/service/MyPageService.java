@@ -6,6 +6,7 @@ import com.kitri.bark_meow_party_server.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,8 @@ public class MyPageService {
     UserService userService;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public ProfileResponseDTO getMyProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -32,11 +35,14 @@ public class MyPageService {
         userMapper.update(profileResponseDTO);
     }
 
-    public void updateMyPassword(User user) {
+    public void updateMyPassword(String password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User tmpUser = userService.findByUsername(username);
-        user.setId(tmpUser.getId());
+        User user = userService.findByUsername(username);
+
+        // 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
 
         userMapper.updatePassword(user);
     }
